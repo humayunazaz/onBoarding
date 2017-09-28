@@ -1,0 +1,12 @@
+.erreur{
+    font-size: 12px;
+    color: red;
+    line-height: 18px;
+    padding-bottom: 8px;
+    text-align: justify;
+    font-style: italic;
+}
+
+.ui-dialog input[type=text].errors, .ui-dialog input[type=mail].errors, .ui-dialog input[type=password].errors{
+    background-color: red;
+}

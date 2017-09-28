@@ -1,0 +1,15 @@
+section.content.mescontrats ul.table-mobile li.contrat.active .deroule{
+    display: block;
+}
+.openInfo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 93px;
+}
+@media (min-width:685px) and (max-width:767px) {
+    .openInfo{
+        height: 77px;
+    }
+}

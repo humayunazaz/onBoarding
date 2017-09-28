@@ -1,0 +1,284 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1 class="titre-page">Créer un contrat </h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }}</p>
+             </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                    <form [formGroup]="form" novalidate>
+                        <div class="onglets tabs r-tabs">
+                            <ul class="r-tabs-nav">
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepOneComplete,
+                                        erreur: contract?.isStepOneComplete == false || contract?.ctxList.indexOf('addrEmail') > -1 || contract?.ctxList.indexOf('addrNumCellular') > -1 || contract?.ctxList.indexOf('addrNumPhone') > -1 || contract?.ctxList.indexOf('secuSocialNumber') > -1
+                                    }"
+                                ><a class="active r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-check"></i><br />1/ Etat civil</a></li>
+                                <li class="r-tabs-tab r-tabs-state-active"><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-pen"></i><br />2/ Adresse personnelle</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepThreeComplete, 
+                                        erreur: contract?.isStepThreeComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-check"></i><br />3/ Fiche d'information</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFourComplete, 
+                                        erreur: contract?.isStepFourComplete == false || contract?.ctxList.indexOf('iban') > -1
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-check"></i><br />4/ Coordonnées bancaires</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFiveComplete, 
+                                        erreur: contract?.isStepFiveComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-check"></i><br />5/ Décharge transporteur</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepSixComplete, 
+                                        erreur: contract?.isStepSixComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-check"></i><br />6/ Signature</a></li>
+                            </ul>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>1/ Etat civil</a></div>
+                            <div class="r-tabs-accordion-title r-tabs-state-active"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-pen"></i><br>2/ Adresse personnelle</a></div>
+                            <div id="adresse" class="r-tabs-panel r-tabs-state-active">
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>N° de rue *</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress1_number" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress1_number.touched && form.controls.addrAddress1_number.errors
+                                            }"
+                                        />
+                                        <p class="erreur" *ngIf="form.controls.addrAddress1_number.errors?.required && form.controls.addrAddress1_number.touched">Ce champs est obligatoire</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>N° de rue *</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress1_number" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress1_number.touched && form.controls.addrAddress1_number.errors
+                                            }"
+                                        />
+                                        <p class="erreur" *ngIf="form.controls.addrAddress1_number.errors?.required && form.controls.addrAddress1_number.touched">Ce champs est obligatoire</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>N° de rue *</label>
+                                        <p>{{contract?.addrAddress1_number}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>N° de rue *</label>
+                                        <p>{{contract.addrAddress1_number}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Nom de rue *</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress1_name" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress1_name.touched && form.controls.addrAddress1_name.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrAddress1_name.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrAddress1_name.errors?.required">Ce champs est obligatoire</p>
+                                            <p class="erreur" *ngIf="form.controls.addrAddress1_name.errors?.notAccented || form.controls.addrAddress1_name.errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Nom de rue *</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress1_name" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress1_name.touched && form.controls.addrAddress1_name.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrAddress1_name.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrAddress1_name.errors?.required">Ce champs est obligatoire</p>
+                                            <p class="erreur" *ngIf="form.controls.addrAddress1_name.errors?.notAccented || form.controls.addrAddress1_name.errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Nom de rue *</label>
+                                        <p>{{contract?.addrAddress1_name}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Nom de rue *</label>
+                                        <p>{{contract?.addrAddress1_name}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Bat, N° d'étage, porte résidence *</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress2" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress2.touched && form.controls.addrAddress2.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrAddress2.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrAddress2.errors?.notAccented || form.controls.addrAddress2.errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Bat, N° d'étage, porte résidence *</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress2" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress2.touched && form.controls.addrAddress2.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrAddress2.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrAddress2.errors?.notAccented || form.controls.addrAddress2.errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Bat, N° d'étage, porte résidence *</label>
+                                        <p>{{contract?.addrAddress2}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Bat, N° d'étage, porte résidence *</label>
+                                        <p>{{contract?.addrAddress2}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Complément d'adresse</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress3" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress3.touched && form.controls.addrAddress3.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrAddress3.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrAddress3.errors?.notAccented || form.controls.addrAddress3.errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Complément d'adresse</label>
+                                        <input type="text" class="form-control" formControlName="addrAddress3" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.addrAddress3.touched && form.controls.addrAddress3.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrAddress3.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrAddress3.errors?.notAccented || form.controls.addrAddress3.errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Complément d'adresse</label>
+                                        <p>{{contract?.addrAddress3}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Complément d'adresse</label>
+                                        <p>{{contract?.addrAddress3}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Code postal *</label>
+                                        <input type="text" class="form-control" mdInput [mdAutocomplete]="autoZips" formControlName="addrCodePostal" (blur)="updateCities('addrCodePostal')"
+                                            [ngClass]="{
+                                                error: form.controls.addrCodePostal.touched && form.controls.addrCodePostal.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrCodePostal.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrCodePostal.errors?.required">Ce champs est obligatoire</p>
+                                            <p class="erreur" *ngIf="form.controls.addrCodePostal.errors?.checkNumber">“Nous n’acceptons que les chiffres</p>
+                                        </div>
+                                        <md-autocomplete #autoZips="mdAutocomplete">
+                                            <md-option *ngFor="let zip of filteredZips" [value]="zip">
+                                                {{ zip }}
+                                            </md-option>
+                                        </md-autocomplete>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Code postal *</label>
+                                        <input type="text" class="form-control" mdInput [mdAutocomplete]="autoZips" formControlName="addrCodePostal" (blur)="updateCities('addrCodePostal')"
+                                            [ngClass]="{
+                                                error: form.controls.addrCodePostal.touched && form.controls.addrCodePostal.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls.addrCodePostal.touched">
+                                            <p class="erreur" *ngIf="form.controls.addrCodePostal.errors?.required">Ce champs est obligatoire</p>
+                                            <p class="erreur" *ngIf="form.controls.addrCodePostal.errors?.checkNumber">“Nous n’acceptons que les chiffres</p>
+                                        </div>
+                                        <md-autocomplete #autoZips="mdAutocomplete">
+                                            <md-option *ngFor="let zip of filteredZips" [value]="zip">
+                                                {{ zip }}
+                                            </md-option>
+                                        </md-autocomplete>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Code postal *</label>
+                                        <p>{{contract?.addrCodePostal}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Code postal *</label>
+                                        <p>{{contract?.addrCodePostal}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Ville ou commune *</label>
+                                        <input type="text" class="form-control" mdInput [mdAutocomplete]="auto" formControlName="addrCity" (blur)="updateCities('addrCity')"
+                                            [ngClass]="{
+                                                error: form.controls.addrCity.touched && form.controls.addrCity.errors
+                                            }"
+                                        />
+                                        <p class="erreur" *ngIf="form.controls.addrCity.errors?.required && form.controls.addrCity.touched">Ce champs est obligatoire</p>
+                                        <md-autocomplete #auto="mdAutocomplete">
+                                            <md-option *ngFor="let state of filteredStates" [value]="state">
+                                                {{ state }}
+                                            </md-option>
+                                        </md-autocomplete>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Ville ou commune *</label>
+                                        <input type="text" class="form-control" mdInput [mdAutocomplete]="auto" formControlName="addrCity" (blur)="updateCities('addrCity')"
+                                            [ngClass]="{
+                                                error: form.controls.addrCity.touched && form.controls.addrCity.errors
+                                            }"
+                                        />
+                                        <p class="erreur" *ngIf="form.controls.addrCity.errors?.required && form.controls.addrCity.touched">Ce champs est obligatoire</p>
+                                        <md-autocomplete #auto="mdAutocomplete">
+                                            <md-option *ngFor="let state of filteredStates" [value]="state">
+                                                {{ state }}
+                                            </md-option>
+                                        </md-autocomplete>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Ville ou commune *</label>
+                                        <p>{{contract?.addrCity}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Ville ou commune *</label>
+                                        <p>{{contract?.addrCity}}</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>3/ Fiche d'information</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>4/ Coordonnées bancaires</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>5/ Décharge transporteur</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>6/ Signature</a></div>
+                        </div>
+                        <div class="recapitulatif recapitulatif-0" style="display: block;">
+                            <p class="titre-recap"><span>Vérification de vos informations</span></p>
+                                <ul class="liste-recap">
+                                    <li *ngFor="let type of validationInformation" 
+                                        [ngClass]="{
+                                            valid : !form.controls[type.control].errors,
+                                            error : form.controls[type.control].touched && form.controls[type.control].errors
+                                        }"
+                                    >
+                                        <i 
+                                            [ngClass]="{
+                                                'icon-check-mark' : !form.controls[type.control].errors,
+                                                'icon-check-unmark' : form.controls[type.control].touched && form.controls[type.control].errors
+                                            }"
+                                        ></i>
+                                        {{type.value}}
+                                    </li>
+                                </ul>
+                            <a (click)="submit()" title="" class="btn-vert">Suivant</a>
+                            <p class="asterisques">* Les champs obligatoires.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

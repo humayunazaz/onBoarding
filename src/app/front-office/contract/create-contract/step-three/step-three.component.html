@@ -1,0 +1,316 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1 class="titre-page">Créer un contrat</h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                    <form [formGroup]="form" novalidate>
+                        <div class="onglets tabs r-tabs">
+                            <ul class="r-tabs-nav">
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                [ngClass]="{
+                                    vert: contract?.isStepOneComplete,
+                                    erreur: contract?.isStepOneComplete == false || contract?.ctxList.indexOf('addrEmail') > -1 || contract?.ctxList.indexOf('addrNumCellular') > -1 || contract?.ctxList.indexOf('addrNumPhone') > -1 || contract?.ctxList.indexOf('secuSocialNumber') > -1
+                                }"
+                                ><a class="active r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-check"></i><br />1/ Etat civil</a></li>
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepTwoComplete,
+                                        erreur: contract?.isStepTwoComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-check"></i><br />2/ Adresse personnelle</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-active"><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-pen"></i><br />3/ Fiche d'information</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFourComplete,
+                                        erreur: contract?.isStepFourComplete == false || contract?.ctxList.indexOf('iban') > -1
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-check"></i><br />4/ Coordonnées bancaires</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFiveComplete,
+                                        erreur: contract?.isStepFiveComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-check"></i><br />5/ Décharge transporteur</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepSixComplete,
+                                        erreur: contract?.isStepSixComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-check"></i><br />6/ Signature</a></li>
+                            </ul>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>1/ Etat civil</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>2/ Adresse personnelle</a></div>
+                            <div class="r-tabs-accordion-title r-tabs-state-active"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-pen"></i><br>3/ Fiche d'information</a></div>
+                            <div id="fiche" class="r-tabs-panel r-tabs-state-active">
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-6">
+                                        <div class="divers-container" *ngIf="user?.profile != 'recrue' && user?.profile != 'CO' && user?.profile != 'Coach' && user?.profile != 'Leader' && !contract?.isSigned">
+                                            <label>Recruteuse *</label>
+                                            <input type="text" class="form-control" mdInput [mdAutocomplete]="rec" formControlName="nameCollaborateurRecruteuse"
+                                                [ngClass]="{
+                                                    error: form.controls.nameCollaborateurRecruteuse.touched && form.controls.nameCollaborateurRecruteuse.errors
+                                                }"
+                                            />
+                                            <p class="erreur" *ngIf="form.controls.nameCollaborateurRecruteuse.touched && form.controls.nameCollaborateurRecruteuse.errors?.required">Ce champs est obligatoire</p>
+                                            <md-autocomplete #rec="mdAutocomplete">
+                                                <md-option *ngFor="let state of filteredRecs | async" [value]="state">
+                                                    {{ state }}
+                                                </md-option>
+                                            </md-autocomplete>
+                                        </div>
+                                        <div class="divers-container" *ngIf="user?.profile == 'recrue' || user?.profile == 'CO' || user?.profile == 'Coach' || user?.profile == 'Leader'|| contract?.isSigned">
+                                            <label>Recruteuse *</label>
+                                            <p>{{contract?.nameCollaborateurRecruteuse}}</p>
+                                        </div>
+                                        <div class="divers-container" *ngIf="user?.profile != 'recrue' && user?.profile != 'CO' && user?.profile != 'Coach' && user?.profile != 'Leader' && !contract?.isSigned">
+                                            <label>Rattachement *</label>
+                                            <div class="select-container">
+                                                <select class="form-control" formControlName="codeStructure">
+                                                    <option *ngFor="let group of listCodeStructure" [value]="group.matricule"> {{ group.name }} - {{ group.matricule }}</option>
+                                                </select>
+                                                <i class="icon-angle"></i>
+                                            </div>
+                                            <p class="erreur" *ngIf="form.controls.codeStructure.touched && form.controls.codeStructure.errors?.required">Ce champs est obligatoire</p>
+                                        </div>
+                                        <div class="divers-container" *ngIf="user?.profile == 'recrue' || user?.profile == 'CO' || user?.profile == 'Coach' || user?.profile == 'Leader'|| contract?.isSigned">
+                                            <label>Rattachement *</label>
+                                            <p>{{contract?.codeStructure}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile != 'recrue' && user?.profile != 'CO' && user?.profile != 'Coach' && user?.profile != 'Leader' && !contract?.isSigned">
+                                        <div class="divers-container">
+                                            <label>Signaleuse *</label>
+                                            <input type="text" class="form-control" mdInput [mdAutocomplete]="auto" formControlName="nameCollaborateurSignaleuse"
+                                                [ngClass]="{
+                                                    error: form.controls.nameCollaborateurSignaleuse.touched && form.controls.nameCollaborateurSignaleuse.errors
+                                                }"
+                                            />
+                                            <p class="erreur" *ngIf="form.controls.nameCollaborateurSignaleuse.touched && form.controls.nameCollaborateurSignaleuse.errors?.required">Ce champs est obligatoire</p>
+                                            <md-autocomplete #auto="mdAutocomplete">
+                                                <md-option *ngFor="let state of filteredSig | async" [value]="state">
+                                                    {{ state }}
+                                                </md-option>
+                                            </md-autocomplete>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' || user?.profile == 'CO' || user?.profile == 'Coach' || user?.profile == 'Leader'|| contract?.isSigned">
+                                        <div class="divers-container">
+                                            <label>Signaleuse *</label>
+                                            <p>{{contract?.nameCollaborateurSignaleuse}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label>Provenance contact *</label>
+                                        <div class="select-container">
+                                            <select class="form-control" formControlName="ctrCodeTypeRecrut">
+                                                <option *ngFor="let recrut of listCtrCodeTypeRecrut" [value]="recrut.code"> {{recrut.labelFull}}</option>
+                                            </select>
+                                            <i class="icon-angle"></i>
+                                        </div>
+                                        <p class="erreur" *ngIf="form.controls.ctrCodeTypeRecrut.touched && form.controls.ctrCodeTypeRecrut.errors?.required">Ce champs est obligatoire</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label>Provenance contact *</label>
+                                        <div *ngFor="let recrut of listCtrCodeTypeRecrut">
+                                            <p *ngIf="recrut.code == contract?.ctrCodeTypeRecrut">{{recrut.labelFull}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label>Campagne de recrutement *</label>
+                                        <div class="select-container">
+                                            <select class="form-control" formControlName="ctrCodeTypeCampagneRecrut">
+                                                <option *ngFor="let campagne of listCtrCodeTypeCampagneRecrut" [value]="campagne.code"> {{campagne.labelFull}}</option>
+                                            </select>
+                                            <i class="icon-angle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label>Campagne de recrutement *</label>
+                                        <div *ngFor="let campagne of listCtrCodeTypeCampagneRecrut">
+                                            <p *ngIf="campagne.code == contract?.ctrCodeTypeCampagneRecrut">{{campagne.labelFull}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <label>Option de démarrage *</label>
+                                        <div class="radio-container">
+                                            <div *ngFor="let demarrage of listCtrCodeOptionDemarrageRecrut">
+                                                <div class="iradio" [ngClass]="{'checked': form.controls['ctrCodeOptionDemarrageRecrut'].value == demarrage.code}">
+                                                    <input class="form-control" formControlName="ctrCodeOptionDemarrageRecrut" [value]="demarrage.code" type="radio" [id]="demarrage.code" style="position: absolute;opacity: 0;">
+                                                </div>
+                                                <label [for]="demarrage.code" class="">{{ demarrage.labelFull }}</label>
+                                            </div>
+                                            <p class="erreur" *ngIf="form.controls.ctrCodeOptionDemarrageRecrut.touched && form.controls.ctrCodeOptionDemarrageRecrut.errors?.required">Ce champs est obligatoire</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <label>Option de démarrage *</label>
+                                        <div *ngFor="let demarrage of listCtrCodeOptionDemarrageRecrut">
+                                            <p *ngIf="demarrage.code == contract?.ctrCodeOptionDemarrageRecrut">{{demarrage.labelFull}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="form.controls['ctrCodeOptionDemarrageRecrut'].value == 'LI'">
+                                    <div class="col-xs-12" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label class="nocenter">Pack de bienvenue choisi(s) *</label>
+                                        <div class="radio-container allwidth">
+                                            <div class="divers-container" *ngFor="let packLib of listPacksLib">
+                                                <div class="iradio" [ngClass]="{'checked': form.controls['clientCodeTypeOperation'].value == packLib.code}">
+                                                    <input class="form-control" formControlName="clientCodeTypeOperation" [value]="packLib.code" type="radio" [id]="packLib.code" style="position: absolute;opacity: 0;">
+                                                </div>
+                                                <label class="col-xs-12" [for]="packLib.code" class="">{{ packLib.labelFull }}</label>
+                                                <div class="col-xs-12 img-container">
+                                                    <img *ngIf="packLib.img != null" [src]="packLib.img" alt=""/>
+                                                    <img *ngIf="packLib.img == null" src="assets/img/illustration.jpg" alt=""/>
+                                                </div>
+                                            </div>
+                                            <p class="erreur" *ngIf="form.controls.clientCodeTypeOperation.touched && form.controls.clientCodeTypeOperation.errors?.required">Ce champs est obligatoire</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label class="nocenter">Pack de bienvenue choisi(s) *</label>
+                                        <div *ngFor="let packLib of listPacksLib">
+                                            <p *ngIf="packLib.code == contract?.clientCodeTypeOperation">{{packLib.labelFull}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="form.controls['ctrCodeOptionDemarrageRecrut'].value == 'DE'">
+                                    <div class="col-xs-12" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label class="nocenter">Pack de bienvenue choisi(s) *</label>
+                                        <div class="radio-container allwidth">
+                                            <div class="divers-container" *ngFor="let packDev of listPacksDev">
+                                                <div class="iradio" [ngClass]="{'checked': form.controls['clientCodeTypeOperation'].value == packDev.code}">
+                                                    <input class="form-control" formControlName="clientCodeTypeOperation" [value]="packDev.code" type="radio" [id]="packDev.code" style="position: absolute;opacity: 0;">
+                                                </div>
+                                                <label class="col-xs-12" [for]="packDev.code" class="">{{ packDev.labelFull }}</label>
+                                                <div class="col-xs-12 img-container">
+                                                    <img *ngIf="packDev.img != null" [src]="packDev.img" alt=""/>
+                                                    <img *ngIf="packDev.img == null" src="assets/img/illustration.jpg" alt=""/>
+                                                </div>
+                                            </div>
+                                            <p class="erreur" *ngIf="form.controls.clientCodeTypeOperation.touched && form.controls.clientCodeTypeOperation.errors?.required">Ce champs est obligatoire</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label class="nocenter">Pack de bienvenue choisi(s) *</label>
+                                        <div *ngFor="let packDev of listPacksDev">
+                                            <p *ngIf="packDev.code == contract?.clientCodeTypeOperation">{{packDev.labelFull}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="form.controls['ctrCodeOptionDemarrageRecrut'].value == 'DE'">
+                                    <div class="col-xs-12" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label>Pack(s) de bienvenue à envoyer</label>
+                                        <div class="radio-container">
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['inforhFlagValise'].value == true}">
+                                                <input [value]=true class="form-control" formControlName="inforhFlagValise" type="radio" id="send" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="send" class="">Oui</label>
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['inforhFlagValise'].value == false}">
+                                                <input [value]=false class="form-control" formControlName="inforhFlagValise" type="radio" id="notsend" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="notsend" class="">Non</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label>Pack(s) de bienvenue à envoyer</label>
+                                        <p *ngIf="contract?.inforhFlagValise">Yes</p>
+                                        <p *ngIf="!contract?.inforhFlagValise">No</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="form.controls['ctrCodeOptionDemarrageRecrut'].value == 'DE'">
+                                    <div class="col-xs-12" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label class="nocenter">Coaching d'essai</label>
+                                        <div class="radio-container">
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['inforhFlagAtelierEssai'].value && form.controls['inforhFlagAtelierEssai'].value != null}">
+                                                <input [value]=true class="form-control" formControlName="inforhFlagAtelierEssai" type="radio" id="Coaching-oui" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="Coaching-oui" class="">Oui</label>
+                                            <div class="iradio" [ngClass]="{'checked': !form.controls['inforhFlagAtelierEssai'].value && form.controls['inforhFlagAtelierEssai'].value != null}">
+                                                <input [value]=false class="form-control" formControlName="inforhFlagAtelierEssai" type="radio" id="Coaching-non" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="Coaching-non" class="">Non</label>
+                                        </div>
+                                        <div *ngIf="form.controls['inforhFlagAtelierEssai'].value && form.controls['inforhFlagAtelierEssai'].value != null" class="divers-container">
+                                            <p>Si oui, matricule ou nom de<br />la personne ayant réalisé le<br />coaching d'essai</p>
+                                            <input class="form-control medium" formControlName="inforhCodeAnimatriceAtelier" type="text" value="Nom Prénom"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label class="nocenter">Coaching d'essai</label>
+                                        <p *ngIf="contract?.inforhFlagAtelierEssai">Yes</p>
+                                        <p *ngIf="!contract?.inforhFlagAtelierEssai">No</p>
+                                        <div *ngIf="form.controls['inforhFlagAtelierEssai'].value && form.controls['inforhFlagAtelierEssai'].value != null" class="divers-container">
+                                            <p>Si oui, matricule ou nom de<br />la personne ayant réalisé le<br />coaching d'essai</p>
+                                            <input class="form-control medium" formControlName="inforhCodeAnimatriceAtelier" type="text" value="Nom Prénom"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>4/ Coordonnées bancaires</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>5/ Décharge transporteur</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>6/ Signature</a></div>
+                        </div>
+                        <div class="recapitulatif recapitulatif-0" style="display: block;">
+                            <p class="titre-recap"><span>Vérification de vos informations</span></p>
+                            <ul class="liste-recap">
+                                <li *ngFor="let type of validationInformation" 
+                                    [ngClass]="{
+                                        valid : !form.controls[type.control].errors,
+                                        error : form.controls[type.control].touched && form.controls[type.control].errors
+                                    }"
+                                >
+                                    <i 
+                                        [ngClass]="{
+                                            'icon-check-mark' : !form.controls[type.control].errors,
+                                            'icon-check-unmark' : form.controls[type.control].touched && form.controls[type.control].errors
+                                        }"
+                                    ></i>
+                                    {{type.value}}
+                                </li>
+                            </ul>
+                            <a (click)="submit()" title="" class="btn-vert">Suivant</a>
+                            <p class="asterisques">* Les champs obligatoires.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

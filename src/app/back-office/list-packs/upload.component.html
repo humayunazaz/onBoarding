@@ -1,0 +1,42 @@
+<div tabindex="-1" role="dialog"
+     class="ui-dialog ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable"
+     aria-describedby="creation-contrat"
+     aria-labelledby="ui-id-1"
+     style="display: block; z-index: 2;position: relative;"
+>
+    <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-draggable-handle">
+        <span id="ui-id-1" class="ui-dialog-title hide">&nbsp;</span>
+        <button md-dialog-close type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Fermer">
+            <span class="ui-button-icon ui-icon ui-icon-closethick"></span>
+            <span class="ui-button-icon-space"> </span>Fermer
+        </button>
+    </div>
+    <div class="lightbox-container ui-dialog-content ui-widget-content" id="creation-contrat" style="display: block; width: auto; min-height: 0px; max-height: none; height: auto;">
+        <p>Télécharger une nouvelle image</p>
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Choisir une image</label>
+                </div>
+                <div class="col-md-12">
+                    <form>
+                        <div class="form-group">
+                            <input type="file" (change)="ngOnChange($event)" class="form-control" name="single"/>
+                        </div>
+                        <small *ngIf="url != null">Preview</small>
+                        <div *ngIf="url != null" class="dz-preview">
+                            <div class="dz-image preview">
+                                <img [src]="url"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        <div class="ui-dialog-buttonset">
+            <button type="submit" (click)="uploadPictureReference()" class="lightbox-btn-vert ui-button ui-corner-all ui-widget">Confirmer</button>
+        </div>
+    </div>
+</div>

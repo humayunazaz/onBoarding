@@ -1,0 +1,159 @@
+<div tabindex="-1" role="dialog"
+     style="display: block; z-index: 2;position: relative;"
+     class="ui-dialog ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable"
+     aria-describedby="creation-contrat" aria-labelledby="ui-id-1" *ngIf="model">
+  <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-draggable-handle"><span id="ui-id-1"
+                                                                                                class="ui-dialog-title hide">&nbsp;</span>
+    <button md-dialog-close type="button"
+            class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close"
+            title="Fermer"><span class="ui-button-icon ui-icon ui-icon-closethick"></span><span
+            class="ui-button-icon-space"> </span>Fermer
+    </button>
+  </div>
+  <form [formGroup]="form">
+    <div class="lightbox-container ui-dialog-content ui-widget-content" id="creation-contrat"
+         style="display: block; width: auto; min-height: 0px; max-height: none; height: auto;">
+      <p>Créer un nouveau contrat</p>
+      <div class="content">
+        <div class="row">
+          <div class="col-md-5">
+            <label>Type de contrat</label>
+          </div>
+          <div class="col-md-7">
+            <div class="radio-container">
+              <div *ngFor="let item of contractTypes">
+                <div class="iradio" [ngClass]="{'checked': model.typeContract == item.value}">
+                  <input class="form-control" formControlName="typeContract" [value]="item.value" type="radio" [id]="item.id" style="position: absolute;opacity: 0;" (click)="updateType(item.value)">
+                </div>
+                <label [for]="item.id" class="">{{ item.code }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="contractType == 'digital'">
+          <div class="col-md-5">
+            <label for="email">Email</label>
+          </div>
+          <div class="col-md-7">
+            <input type="mail" id="email"
+                   required
+                   formControlName="addrEmail" name="email"
+                   [ngClass]="{
+                    errors: submitted && form.controls.addrEmail.errors,
+                    error: form.controls.addrEmail.touched && form.controls.addrEmail.errors
+                  }"
+            >
+            <p *ngIf="message && blockEmail" class="erreur"> {{ message }}</p>
+            <div *ngIf="form.controls.addrEmail.touched || submitted">
+              <p class="erreur" *ngIf="form.controls.addrEmail.errors?.required">Ce champs est obligatoire</p>
+              <p class="erreur" *ngIf="form.controls.addrEmail.errors?.emailAccent">Nous n’acceptons pas les accents</p>
+              <p class="erreur" *ngIf="form.controls.addrEmail.errors?.checkEmail">Format accepté : email@email.net / email@email.com / email@email.fr</p>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="contractType == 'digital'">
+          <div class="col-md-5">
+            <label for="confirmEmail">Confirmation de l'email</label>
+          </div>
+          <div class="col-md-7">
+            <input type="mail" id="confirmEmail"
+                   formControlName="confirmEmail"
+                   name="confirmEmail"
+                   [ngClass]="{
+                errors: submitted && form.controls.confirmEmail.errors,
+                error: form.controls.confirmEmail.touched && form.controls.confirmEmail.errors
+              }"
+            >
+            <div *ngIf="form.controls.confirmEmail.touched || submitted">
+              <p class="erreur" *ngIf="form.controls.confirmEmail.errors?.required">Ce champs est obligatoire</p>
+              <p class="erreur" *ngIf="form.controls.confirmEmail.errors?.checkEmail">Format accepté : email@email.net / email@email.com / email@email.fr</p>
+              <p class="erreur" *ngIf="form.controls.confirmEmail.errors?.mustBeSame">Les deux adresses emails saisies ne correspondent pas</p>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="contractType != 'digital'">
+          <div class="col-md-5">
+            <label for="email">Email</label>
+          </div>
+          <div class="col-md-7">
+            <input type="mail" id="email2"
+                   formControlName="addrEmail2" name="email2"
+                   [ngClass]="{
+
+                    error: form.controls.addrEmail2.touched && form.controls.addrEmail2.errors
+                  }"
+            >
+            <p *ngIf="message && blockEmail" class="erreur"> {{ message }}</p>
+            <div *ngIf="form.controls.addrEmail2.touched || submitted">
+              <p class="erreur" *ngIf="form.controls.addrEmail2.errors?.emailAccent">Nous n’acceptons pas les accents</p>
+              <p class="erreur" *ngIf="form.controls.addrEmail2.errors?.checkEmail">Format accepté : email@email.net / email@email.com / email@email.fr</p>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="contractType != 'digital'">
+          <div class="col-md-5">
+            <label for="confirmEmail">Confirmation de l'email</label>
+          </div>
+          <div class="col-md-7">
+            <input type="mail" id="confirmEmail2"
+                   formControlName="confirmEmail2"
+                   name="confirmEmail2"
+                   [ngClass]="{
+                errors: submitted && form.controls.confirmEmail2.errors,
+                error: form.controls.confirmEmail2.touched && form.controls.confirmEmail2.errors
+              }"
+            >
+            <div *ngIf="form.controls.confirmEmail2.touched || submitted">
+              <p class="erreur" *ngIf="form.controls.confirmEmail2.errors?.mustBeSame">Les deux	adresses emails	saisies	ne correspondent pas</p>
+              <p class="erreur" *ngIf="form.controls.confirmEmail2.errors?.checkEmail">Format accepté : email@email.net / email@email.com / email@email.fr</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <label for="lastName">Nom</label>
+          </div>
+          <div class="col-md-7">
+            <input type="text" id="lastName" required formControlName="lastName" appUppercase
+                   name="lastName" [ngClass]="{
+                errors: submitted && form.controls.lastName.errors,
+                error: form.controls.lastName.touched && form.controls.lastName.errors
+              }">
+            <div *ngIf="form.controls.lastName.touched || submitted">
+              <p class="erreur" *ngIf="form.controls.lastName.errors?.required">Ce champs est obligatoire</p>
+              <p class="erreur" *ngIf="form.controls.lastName.errors?.notPunctuation || form.controls.lastName.errors?.notAccented">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <label for="firstName">Prénom</label>
+          </div>
+          <div class="col-md-7">
+            <input type="text" id="firstName" formControlName="firstName" appUppercase
+                   name="firstName" [ngClass]="{
+                errors: submitted && form.controls.firstName.errors,
+                error: form.controls.firstName.touched && form.controls.firstName.errors
+              }">
+            <div *ngIf="form.controls.firstName.touched || submitted">
+              <p class="erreur" *ngIf="form.controls.firstName.errors?.required">Ce champs est obligatoire</p>
+              <p class="erreur" *ngIf="form.controls.firstName.errors?.notPunctuation || form.controls.firstName.errors?.notAccented">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="form.controls.lastName.touched && form.controls.firstName.touched && form.controls.addrEmail.touched && form.invalid">
+          <div class="col-xs-12">
+            <p class="error">Merci de vérifier les informations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <div class="ui-dialog-buttonset">
+        <button type="submit" (click)="createContract()" class="lightbox-btn-vert ui-button ui-corner-all ui-widget">Confirmer
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

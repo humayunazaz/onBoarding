@@ -1,0 +1,59 @@
+<section class="bo-content import">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-4">
+                <h1 class="titre-page">IMPORT</h1>
+            </div>
+            <div id="start-import" class="col-xs-12 col-md-8">
+                <button type="button" (click)="forceImport()" class="btn">Start Import</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="list-import">
+                    <br>
+                    <div class="row">
+                        <h3><i class="glyphicon glyphicon-list-alt"></i>Liste des imports <small>(Le nombre d'erreur est plafonné à 100)</small></h3>
+                    </div>
+
+                    <div class="row" >
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Start date</th>
+                                <th>End date</th>
+                                <th>Success</th>
+                                <th>Error</th>
+                            </tr>
+                            <tr *ngFor="let import of importsList" (click)="selectImport = import">
+                                <td>{{import.startDate| date:"MM/dd/yyyy 'at' h:mm:sa"}}</td>
+                                <td>{{import.endDate| date:"MM/dd/yyyy 'at' h:mm:sa"}}</td>
+                                <td>{{import.successList.length}}</td>
+                                <td>{{import.errorList.length}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="row" *ngIf="selectImport">
+                        <h3><i class="glyphicon glyphicon-search"></i>Detail Error</h3>
+                    </div>
+
+                    <div class="row" *ngIf="selectImport">
+                        <h4 *ngIf="selectImport.successList.length > 0">Success</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let item of selectImport.successList">
+                                {{item | json}}
+                            </li>
+                        </ul>
+                        <h4 *ngIf="selectImport.errorList.length > 0">Error General</h4>
+                        <ul class="list-group" >
+                            <li class="list-group-item" *ngFor="let item of selectImport.errorList">
+                                {{item | json}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

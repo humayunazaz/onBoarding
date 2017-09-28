@@ -1,0 +1,87 @@
+@media (max-width: $breack-md - 1)
+    
+    section.content
+        .creation-contrat
+            .onglets
+                .r-tabs-panel
+                    label, label.nocenter
+                        width: 100%
+                        position: relative
+                        transform: translate(0px);
+                        top: 0
+                    input[type="text"], input[type="mail"], input[type="phone"], .radio-container, .select-container, p.informations, p, .checkbox-container
+                        width: 100%
+                        max-width: none !important
+                        margin-left: 0
+                        margin-bottom: 20px
+                        + input[type="text"]
+                            margin-left: 0
+                    .col-xs-12:not(.col-lg-6) .select-container
+                        width: 100%
+                        margin-left: 0
+                        margin-bottom: 20px
+                    
+                    .col-xs-12 > div.divers-container p + input
+                        margin-left: 0
+                .btn-vert
+                    padding: 10px
+                    line-height: normal
+                    font-size: 18px
+                    height: auto
+                .checkbox-only
+                    label
+                        padding-left: 40px
+                        min-height: 34px
+                    > div
+                        transform: translateY(-42px)
+        .recap-contrats
+            text-align: center
+            i.icon-contrat, p
+                float: none
+                width: 100%
+                margin: 0
+            
+    section.content .pagination ul li a.next, section.content .pagination ul li a.prev, section.content .pagination ul li span.next, section.content .pagination ul li span.prev
+        width: 100%
+        padding: 10px 25px
+        
+    section.content 
+        table 
+            tr 
+                td
+                    min-width: 0
+                    min-height: 55px
+                    height: auto
+                    &.boutons 
+                        a
+                            clear: both
+                            margin-bottom: 5px
+                            width: 100%
+                            height: auto
+                    &:last-child
+                        border-right: 1px solid #e6ecf3
+                    &:first-child
+                        border-left: 1px solid #e6ecf3
+        .btn-vert-border
+            min-width: 0
+                        
+    .ui-dialog 
+        .content 
+            label
+                padding-bottom: 10px
+        .content-delegation 
+            .delegations 
+                li 
+                    .icones
+                        margin-right: 0
+                        width: 20%
+                    .delegation-more
+                        width: 60%
+                    .buttons
+                        width: 20%
+        .ui-dialog-buttonset
+            button
+                margin-top: 15px
+                
+
+        

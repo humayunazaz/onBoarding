@@ -1,0 +1,74 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-7">
+                <h1 class="titre-page">Confirmation d'enregistrement du contrat</h1>
+            </div>
+            <div class="col-xs-12 col-lg-5">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                     <div class="onglets no-tabs">
+                         <ul class="r-tabs-nav">
+                             <li class="vert r-tabs-state-default r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-check"></i><br />1/ Etat civil</a></li>
+                             <li class="vert r-tabs-state-default r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-check"></i><br />2/ Adresse personnelle</a></li>
+                             <li class="vert r-tabs-state-default r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-check"></i><br />3/ Fiche d'information</a></li>
+                             <li class="vert r-tabs-state-default r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-check"></i><br />4/ Coordonnées bancaires</a></li>
+                             <li class="vert r-tabs-state-default r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-check"></i><br />5/ Décharge transporteur</a></li>
+                             <li class="vert r-tabs-state-default r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-check"></i><br />6/ Signature</a></li>
+                         </ul>
+                         <div class="vert r-tabs-accordion-title"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>1/ Etat civil</a></div>
+                         <div class="vert r-tabs-accordion-title"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>2/ Adresse personnelle</a></div>
+                         <div class="vert r-tabs-accordion-title"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>3/ Fiche d'information</a></div>
+                         <div class="vert r-tabs-accordion-title"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>4/ Coordonnées bancaires</a></div>
+                         <div class="vert r-tabs-accordion-title"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>5/ Décharge transporteur</a></div>
+                         <div class="vert r-tabs-accordion-title"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>6/ Signature</a></div>
+                         <div id="confirmation" class="r-tabs-panel">
+                             <div class="row">
+                                 <div class="col-xs-12 col-md-2">
+                                     <i class="checkbox-degrade"></i>
+                                 </div>
+                                 <div class="col-xs-12 col-md-10">
+                                     <h2 class="h2">Merci, vos informations ont bien été enregistrées !</h2>
+                                     <p class="confirmation">Les prochaines étapes sont les suivantes:<br /><br />
+                                         <span>
+	                                          1. Prochainement vous recevrez le notification de la validation de votre contrat.<br />
+	                                          2. Ensuite vous recevrez un email vous invitant à signer votre contrat<br />
+	                                          3. Et enfin vous recevrez un denier email contenant les différentes informations vous permettant de commencer à travailler.<br /><br/><br/>
+                                              <a routerLink="/contract/list" title="" class="lien-noir">Suivre l'état de mon contrat</a>
+                                         </span>
+                                     </p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--<div class="row container steps-container">-->
+  <!--<div class="steps-component">-->
+    <!--<div class="col-md-2">-->
+      <!--<img src="../../../../../assets/img/check-degrade.svg">-->
+    <!--</div>-->
+
+    <!--<div class="col-md-10">-->
+      <!--<p class="header"><b>Merci, vos informations ont bien été enregistrées!</b></p>-->
+      <!--<p class="second_header">Les prochaines étapes sont les suivantes:</p>-->
+      <!--<ol start="1">-->
+        <!--<li>1. Prochainment vous recevrez le notification de la validation de votre contrat.</li>-->
+        <!--<li>2. Ensuite vous recevrez un email un invitant à signer votre contrat.</li>-->
+        <!--<li>3. Et enfin vous recevrez un denier email contenant les différentes informations vous permettant de commencer à-->
+          <!--travailler.-->
+        <!--</li>-->
+        <!--<a routerLink="/contract/list" class="lien-noir last_button" title="">Suivre l'état de mon contrat</a>-->
+
+      <!--</ol>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

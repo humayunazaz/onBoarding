@@ -1,0 +1,47 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-4 col-lg-offset-2">
+                <div class="login-container">
+                    <div class="header">
+                        <div class="logo">
+                            <a href="#" title="" class=""><img src="assets/img/logo.svg" alt=""/></a>
+                        </div>
+                    </div>
+                    <div class="title-backoffice">
+                        Back Office
+                    </div>
+                    <div class="bloc-blanc">
+                        <p *ngIf="message" class="erreur">Erreur d'identification, merci de vérifier vos identifiants</p>
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+                            <div class="champs-container">
+                                <i class="icon-mail"></i>
+                                <input type="mail" placeholder="Email" class="form-control" formControlName="email" required>
+                            </div>
+                            <div class="champs-container">
+                                <i class="icon-lock"></i>
+                                <input type="password" placeholder="Mot de passe" class="form-control" formControlName="password" required/>
+                            </div>
+                            <button [disabled]="!loginForm.valid" type="submit"><i class="icon-deconnexion"></i> Se connecter</button>
+                        </form>
+                    </div>
+                    <!-- /.bloc-blanc -->
+                </div>
+                <!-- /.login-container -->
+            </div>
+            <div class="col-xs-12 col-lg-5">
+                <div class="explication-login">
+                    <i class="icon-bulle"></i>
+                    <h1>Stan Home Quick contrat</h1>
+                    <h2>En quelques mots</h2>
+                    <ul>
+                        <li>Integer iaculis ligula pulvinar, varius sapien vel, scelerisque turpis. Pellentesque velit lacus, rutrum sed nisl pretium, varius vehicula nisi. </li>
+                        <li>Sed lobortis libero nec sem euismod, a efficitur tellus finibus. Mauris consequat eget mauris sit amet venenatis. In hac habitasse platea dictumst. Donec efficitur rutrum neque, quis bibendum nisi gravida at. </li>
+                        <li>Donec aliquam vehicula lectus, eget porta tortor. Donec eget tortor sapien. Curabitur interdum nibh eget interdum consequat.</li>
+                    </ul>
+                </div>
+                <!-- /.explication-login -->
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,251 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1 class="titre-page">Créer un contrat</h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                    <form [formGroup]="form" novalidate>
+                        <div class="onglets tabs r-tabs">
+                            <ul class="r-tabs-nav">
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                [ngClass]="{
+                                    vert: contract?.isStepOneComplete,
+                                    erreur: contract?.isStepOneComplete == false || contract?.ctxList.indexOf('addrEmail') > -1 || contract?.ctxList.indexOf('addrNumCellular') > -1 || contract?.ctxList.indexOf('addrNumPhone') > -1 || contract?.ctxList.indexOf('secuSocialNumber') > -1
+                                }"
+                                ><a class="active r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-check"></i><br />1/ Etat civil</a></li>
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepTwoComplete,
+                                        erreur: contract?.isStepTwoComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-check"></i><br />2/ Adresse personnelle</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepThreeComplete,
+                                        erreur: contract?.isStepThreeComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-check"></i><br />3/ Fiche d'information</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFourComplete,
+                                        erreur: contract?.isStepFourComplete == false || contract?.ctxList.indexOf('iban') > -1
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-check"></i><br />4/ Coordonnées bancaires</a></li>
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFiveComplete,
+                                        erreur: contract?.isStepFiveComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-check"></i><br />5/ Décharge transporteur</a></li>
+                                <li class="r-tabs-state-active r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-pen"></i><br />6/ Signature</a></li>
+                            </ul>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>1/ Etat civil</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>2/ Adresse personnelle</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>3/ Fiche d'information</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>4/ Coordonnées bancaires</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>5/ Décharge transporteur</a></div>
+                            <div class="r-tabs-accordion-title r-tabs-state-active"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-pen"></i><br>6/ Signature</a></div>
+                            <div id="signature" class="r-tabs-panel r-tabs-state-active">
+                                <h2 class="h2">Enregistrement du contrat (à remplir par la recrue)</h2>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12">
+                                        <p class="texte size15">J'accepte de recevoir en temps réel les informations commerciales de Stanhome pour les clientes et vous.</p>
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id="addrSmsAutorisation" formControlName="addrSmsAutorisation" />
+                                            <label for="addrSmsAutorisation">SMS</label>
+                                            <input type="checkbox" id='emailAutorisation' formControlName="emailAutorisation" />
+                                            <label for="emailAutorisation">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <p class="texte size15">J'accepte de recevoir en temps réel les informations commerciales de Stanhome pour les clientes et vous.</p>
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf="contract?.addrSmsAutorisation">Yes: SMS</label>
+                                            <label *ngIf="!contract?.addrSmsAutorisation">No: SMS</label>
+                                            <label *ngIf="contract?.emailAutorisation">Yes: Email</label>
+                                            <label *ngIf="!contract?.emailAutorisation">No: Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id='okContratStanhome' formControlName="okContratStanhome" />
+                                            <label for="okContratStanhome">En signant j'atteste être en accord avec le contrat de vendeur à domicile  indépendant <br />mandataire STANHOME et ses annexes</label>
+                                            <a class="lien-noir" title=""><i class="icon-arrow"></i> Télécharger les annexes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf="contract?.okContratStanhome">Yes: En signant j'atteste être en accord avec le contrat de vendeur à domicile  indépendant <br />mandataire STANHOME et ses annexes</label>
+                                            <label *ngIf="!contract?.okContratStanhome">No: En signant j'atteste être en accord avec le contrat de vendeur à domicile  indépendant <br />mandataire STANHOME et ses annexes</label>
+                                            <a class="lien-noir" title=""><i class="icon-arrow"></i> Télécharger les annexes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id='inforhFlagAttestWork' formControlName="inforhFlagAttestWork" />
+                                            <label for="inforhFlagAttestWork">Je souhaite recevoir un justificatif mensuel de mon activité.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf="contract?.inforhFlagAttestWork">Yes: Je souhaite recevoir un justificatif mensuel de mon activité.</label>
+                                            <label *ngIf="!contract?.inforhFlagAttestWork">No: Je souhaite recevoir un justificatif mensuel de mon activité.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id='taxeCodeAutorisation' formControlName="taxeCodeAutorisation" />
+                                            <label for="taxeCodeAutorisation">En signant j'atteste être en accord avec les obligations fiscales</label>
+                                            <a class="lien-noir" title=""><i class="icon-arrow"></i> Télécharger</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf="contract?.taxeCodeAutorisation">Yes: En signant j'atteste être en accord avec les obligations fiscales</label>
+                                            <label *ngIf="!contract?.taxeCodeAutorisation">No: En signant j'atteste être en accord avec les obligations fiscales</label>
+                                            <a class="lien-noir" title=""><i class="icon-arrow"></i> Télécharger</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id='directDebitAutorisation' formControlName="directDebitAutorisation" />
+                                            <label for="directDebitAutorisation">En signant ce contrat vous autorisez STANHOME France à envoyer des instructions à votre banque pour débiter votre compte et votre banque à débiter votre compte conformément aux instructions de Stanhome France. Vous bénéficiez du droit d'etre remboursé par votre banque selon les conditions décrites dans la convention que vous avez passés avec elle .</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf="contract?.directDebitAutorisation">Yes: En signant ce contrat vous autorisez STANHOME France à envoyer des instructions à votre banque pour débiter votre compte et votre banque à débiter votre compte conformément aux instructions de Stanhome France. Vous bénéficiez du droit d'etre remboursé par votre banque selon les conditions décrites dans la convention que vous avez passés avec elle .</label>
+                                            <label *ngIf="!contract?.directDebitAutorisation">No: En signant ce contrat vous autorisez STANHOME France à envoyer des instructions à votre banque pour débiter votre compte et votre banque à débiter votre compte conformément aux instructions de Stanhome France. Vous bénéficiez du droit d'etre remboursé par votre banque selon les conditions décrites dans la convention que vous avez passés avec elle .</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id='promotionOfferAutorisation' formControlName="promotionOfferAutorisation" />
+                                            <label for="promotionOfferAutorisation">Cocher cette case si je ne souhaite pas recevoir des offres des partenaires de Stanhome</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf="contract?.promotionOfferAutorisation">Yes: Cocher cette case si je ne souhaite pas recevoir des offres des partenaires de Stanhome</label>
+                                            <label *ngIf="!contract?.promotionOfferAutorisation">No: Cocher cette case si je ne souhaite pas recevoir des offres des partenaires de Stanhome</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="texte size15">Une demande de remboursement doit etre présentée :<br />
+                                            > dans les 8 semaines suivant la date de débit de votre compte pour un prélevement autorisé.<br />
+                                            > Sans tarder et au plus tard dans les 13 mois en cas de prélevement non autorisé.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="texte size15">Les informations recueillies sur ce formulaire sont enregistrées dans un fichier informatisé par Stanhome France pour l’accès et l’utilisation des outils informatiques. Conformément à la loi « informatique et libertés », vous pouvez exercer votre droit d'accès aux données vous concernant et les faire rectifier en contactant : Service RH Stanhome. </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <a (click)="submit()" title="" class="btn-vert lightbox" lightbox="confirmation-validation"
+                                            [ngClass]="{
+                                                disable: !contract?.isStepOneComplete || !contract?.isStepTwoComplete || !contract?.isStepThreeComplete 
+                                            }"
+                                        ><i class="icon-check-degrade"></i> Enregistrer et lancer la validation du contrat</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recapitulatif recapitulatif-0" style="display: block;">
+                            <p class="titre-recap"><span>Vérification de vos informations</span></p>
+                            <ul class="liste-recap">
+                                <li *ngFor="let type of validationInformation" 
+                                    [ngClass]="{
+                                        valid : form.controls[type.control].value == true,
+                                        error : form.controls[type.control].touched && form.controls[type.control].value == false
+                                    }"
+                                >
+                                    <i 
+                                        [ngClass]="{
+                                            'icon-check-mark' : form.controls[type.control].value == true,
+                                            'icon-check-unmark' : form.controls[type.control].touched && form.controls[type.control].value == false
+                                        }"
+                                    ></i>
+                                    {{type.value}}
+                                </li>
+                            </ul>
+                            <p class="asterisques">* Les champs obligatoires.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

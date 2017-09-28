@@ -1,0 +1,119 @@
+<div tabindex="-1" role="dialog"
+     class="ui-dialog ui-widget ui-widget-content ui-front ui-dialog-buttons ui-draggable"
+     aria-describedby="creation-contrat"
+     aria-labelledby="ui-id-1"
+     style="display: block; z-index: 2;position: relative;"
+    >
+    <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-draggable-handle">
+        <span id="ui-id-1" class="ui-dialog-title hide">&nbsp;</span>
+        <button md-dialog-close type="button" class="ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close" title="Fermer">
+            <span class="ui-button-icon ui-icon ui-icon-closethick"></span>
+            <span class="ui-button-icon-space"> </span>Fermer
+        </button>
+    </div>
+    <form [formGroup]="userStaffForm" novalidate>
+        <div class="lightbox-container ui-dialog-content ui-widget-content" id="creation-contrat" style="display: block; width: auto; min-height: 0px; max-height: none; height: auto;">
+        <p>Créer un nouvel utilisateur</p>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="mail" id="email" class="form-control" formControlName="email"
+                            [ngClass]="{
+                                error: userStaffForm.controls['email'].touched && userStaffForm.controls['email'].errors || message == true,
+                                errors: submitted && userStaffForm.controls['email'].errors
+                            }"
+                        >
+                        <div *ngIf="userStaffForm.controls['email'].touched || submitted">
+                            <p class="erreur" *ngIf="userStaffForm.controls.email.errors?.required">Ce	champs	est	obligatoire</p>
+                            <p class="erreur" *ngIf="userStaffForm.controls.email.errors?.emailAccent">Nous n’acceptons pas les accents</p>
+                            <p class="erreur" *ngIf="userStaffForm.controls.email.errors?.checkEmail">Format accepté : email@email.net / email@email.com / email@email.fr</p>
+                            <p *ngIf="message" class="erreur"> Cet email existe déjà. Veuillez en saisir une autre.</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="lastName">Nom</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" id="lastName" class="form-control" formControlName="lastName"
+                            [ngClass]="{
+                                error: userStaffForm.controls['lastName'].touched && userStaffForm.controls['lastName'].errors,
+                                errors: submitted && userStaffForm.controls['lastName'].errors
+                            }"
+                        >
+                        <div *ngIf="userStaffForm.controls['lastName'].touched || submitted">
+                            <p class="erreur" *ngIf="userStaffForm.controls['lastName'].errors?.required">Ce champs est obligatoire</p>
+                            <p class="erreur" *ngIf="userStaffForm.controls['lastName'].errors?.notAccented || userStaffForm.controls['lastName'].errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="firstName">Prénom</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="text" id="firstName" class="form-control" formControlName="firstName"
+                            [ngClass]="{
+                                error: userStaffForm.controls['firstName'].touched && userStaffForm.controls['firstName'].errors,
+                                errors: submitted && userStaffForm.controls['firstName'].errors
+                            }"
+                        >
+                        <div *ngIf="userStaffForm.controls['firstName'].touched || submitted">
+                            <p class="erreur" *ngIf="userStaffForm.controls['firstName'].errors?.required">Ce champs est obligatoire</p>
+                            <p class="erreur" *ngIf="userStaffForm.controls['firstName'].errors?.notAccented || userStaffForm.controls['firstName'].errors?.notPunctuation">Nous n’acceptons que les majuscules sans accent et sans ponctuation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="pwd">Mot de passe</label>
+                    </div>
+                    <div class="col-md-7">
+                        <input type="password" id="pwd" class="form-control" formControlName="password"
+                            [ngClass]="{
+                                error: userStaffForm.controls['password'].touched && userStaffForm.controls['password'].errors,
+                                errors: submitted && userStaffForm.controls['password'].errors
+                            }"
+                        >
+                        <div *ngIf="userStaffForm.controls['password'].touched || submitted">
+                            <p class="erreur" *ngIf="userStaffForm.controls['password'].errors?.required">Ce champs est obligatoire</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label>Profil</label>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="radio-container">
+                            <div *ngFor="let item of profileList">
+                                <div class="iradio" [ngClass]="{'checked': userStaffForm.controls['profile'].value == item}">
+                                    <input class="form-control" formControlName="profile" [value]="item" type="radio" [id]="item" style="position: absolute;opacity: 0;">
+                                </div>
+                                <label [for]="item" class="">{{ item }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-md-offset-5" *ngIf="userStaffForm.controls['profile'].touched || submitted">
+                        <p class="erreur" *ngIf="userStaffForm.controls['profile'].errors?.required">Ce champs est obligatoire</p>
+                    </div>
+                </div>
+                <div class="row" *ngIf="userStaffForm.controls['profile'].touched && userStaffForm.controls['firstName'].touched && userStaffForm.controls['password'].touched && userStaffForm.controls['lastName'].touched && userStaffForm.controls['email'].touched">
+                    <div class="col-xs-12" *ngIf="!userStaffForm.valid">
+                        <p class="error">Merci de vérifier les informations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <div class="ui-dialog-buttonset">
+                <button type="submit" (click)="saveUserStaff()" class="lightbox-btn-vert ui-button ui-corner-all ui-widget">Confirmer</button>
+            </div>
+        </div>
+    </form>
+</div>

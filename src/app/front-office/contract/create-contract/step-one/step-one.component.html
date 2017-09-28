@@ -1,0 +1,506 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1 class="titre-page">Créer un contrat</h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                    <form [formGroup]="form" novalidate>
+                        <div class="onglets tabs r-tabs">
+                            <ul class="r-tabs-nav">
+                                <li class="r-tabs-tab r-tabs-state-active"><a class="active r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-pen"></i><br />1/ Etat civil</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepTwoComplete,
+                                        erreur: contract?.isStepTwoComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-check"></i><br />2/ Adresse personnelle</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepThreeComplete,
+                                        erreur: contract?.isStepThreeComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-check"></i><br />3/ Fiche d'information</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFourComplete,
+                                        erreur: contract?.isStepFourComplete == false || contract?.ctxList.indexOf('iban') > -1
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-check"></i><br />4/ Coordonnées bancaires</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFiveComplete,
+                                        erreur: contract?.isStepFiveComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-check"></i><br />5/ Décharge transporteur</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepSixComplete, 
+                                        erreur: contract?.isStepSixComplete == false
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-check"></i><br />6/ Signature</a></li>
+                            </ul>
+                            <div class="r-tabs-accordion-title lun r-tabs-state-active"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-pen"></i><br>1/ Etat civil</a></div>
+                            <div id="etat" class="r-tabs-panel r-tabs-state-active">
+                                <div class="row" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <label>Email * </label>
+                                        <input type="mail" class="form-control" formControlName="addrEmail"
+                                               [ngClass]="{
+                                                error: form.controls.addrEmail.touched && form.controls.addrEmail.errors || error == 'email',
+                                                errors: contract?.ctxList.indexOf('addrEmail') > -1 && emailError
+                                            }"
+                                        >
+                                        <p *ngIf="form.controls['addrEmail'].errors">{{form.controls['addrEmail'].errors?.checkEmail}}</p>
+                                        <p *ngIf="blockEmail" class="erreur"> Attention, l’adresse email saisie est signalé comme « contentieuse ». Veuillez saisir une autre adresse email. La création du contrat ne peut continuer.</p>
+                                        <p *ngIf="generalBlock" class="erreur"> Vous avez saisie plusieurs informations qui ont été reconnus comme contentieux. La création du contrat ne peut continuer.</p>
+                                        <p *ngIf="contract?.ctxList.indexOf('addrEmail') > -1 && emailError" class="erreur"> L’email saisie existe déjà en base – Vous pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome</p>
+                                        <p *ngIf="form.controls['addrEmail'].errors?.required && form.controls['addrEmail'].touched" class="erreur">Ce champs est obligatoire</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <label>Email * </label>
+                                        <p>{{contract?.addrEmail}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <label>Civilité *</label>
+                                        <div class="radio-container">
+                                            <div *ngFor="let item of listCivility">
+                                                <div class="iradio" [ngClass]="{'checked': form.controls['civCodeCivilite'].value == item.code}">
+                                                    <input class="form-control" formControlName="civCodeCivilite" [value]="item.code" type="radio" [id]="item.code" style="position: absolute;opacity: 0;">
+                                                </div>
+                                                <label [for]="item.code" class="">{{ item.code }}</label>
+                                            </div>
+                                            <p *ngIf="form.controls['civCodeCivilite'].errors?.required && form.controls['civCodeCivilite'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12 col-lg-12">
+                                        <label>Civilité *</label>
+                                        <p>{{contract?.civCodeCivilite}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="espace"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label>Nom *</label>
+                                        <input type="text" class="form-control" formControlName="lastName" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.lastName.touched && form.controls.lastName.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls['lastName'].touched">
+                                            <p *ngIf="form.controls['lastName'].errors?.required" class="erreur">Ce champs est obligatoire</p>
+                                            <p *ngIf="form.controls['lastName'].errors?.notAccented || form.controls['lastName'].errors?.notPunctuation" class="erreur">Nous n’acceptons	que	les	majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label>Nom * </label>
+                                        <p>{{contract?.lastName}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['civCodeCivilite'].value == 'MME' && ((user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned ))">
+                                        <label>Nom de jeune fille *</label>
+                                        <input type="text" class="form-control" formControlName="civMaidenName" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.civMaidenName.touched && form.controls.civMaidenName.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls['civMaidenName'].touched">
+                                            <p *ngIf="form.controls['civMaidenName'].errors?.required" class="erreur">Ce champs est obligatoire</p>
+                                            <p *ngIf="form.controls['civMaidenName'].errors?.notAccented || form.controls['civMaidenName'].errors?.notPunctuation" class="erreur">Nous n’acceptons	que	les	majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['civCodeCivilite'].value == 'MME' && ((user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned))">
+                                        <label>Nom de jeune fille * </label>
+                                        <p>{{contract?.civMaidenName}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile != 'recrue' && !contract?.isSigned">
+                                        <label>Prénom *</label>
+                                        <input type="text" class="form-control" formControlName="firstName" appUppercase
+                                            [ngClass]="{
+                                                error: form.controls.firstName.touched && form.controls.firstName.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls['firstName'].touched">
+                                            <p *ngIf="form.controls['firstName'].errors?.required" class="erreur">Ce champs est obligatoire</p>
+                                            <p *ngIf="form.controls['firstName'].errors?.notAccented || form.controls['firstName'].errors?.notPunctuation" class="erreur">Nous n’acceptons que les	majuscules sans accent et sans ponctuation</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' || contract?.isSigned">
+                                        <label>Prénom * </label>
+                                        <p>{{contract?.firstName}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                        <label>Situation de famille</label>
+                                        <div class="select-container">
+                                            <select class="form-control" formControlName="familySituation">
+                                                <option *ngFor="let situation of listSituationFamily" [value]="situation.code"> {{situation.labelFull}}</option>
+                                            </select>
+                                            <i class="icon-angle"></i>
+                                        </div>
+                                        <p *ngIf="form.controls['familySituation'].errors?.required && form.controls['familySituation'].touched" class="erreur">Ce champs est obligatoire</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                        <label>Situation de famille </label>
+                                        <p>{{contract?.familySituation}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Premier Numéro *</label>
+                                        <input type="phone" class="form-control" formControlName="addrNumCellular"
+                                            [ngClass]="{
+                                                error: form.controls.addrNumCellular.touched && form.controls.addrNumCellular.errors || error == 'cell',
+                                                errors: contract?.ctxList.indexOf('addrNumCellular') > -1
+                                            }"
+                                        />
+                                        <p *ngIf="form.controls['addrNumCellular'].errors?.required && form.controls['addrNumCellular'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        <p *ngIf="blockCell" class="erreur"> Attention, le numéro de téléphone saisie est signalé comme « contentieux ». Veuillez saisir un autre numéro de téléphone. La création du contrat ne peut continuer.</p>
+                                        <p *ngIf="contract?.ctxList.indexOf('addrNumCellular') > -1" class="erreur">“Le numéro de téléphone saisie existe déjà en base – Vous	pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome </p>
+                                        <p *ngIf="form.controls['addrNumCellular'].errors?.checkNumber && form.controls['addrNumCellular'].touched" class="erreur">Nous n’acceptons que les chiffres</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Premier Numéro *</label>
+                                        <input type="phone" class="form-control" formControlName="addrNumCellular"
+                                            [ngClass]="{
+                                                error: form.controls.addrNumCellular.touched && form.controls.addrNumCellular.errors || error == 'cell',
+                                                errors: contract?.ctxList.indexOf('addrNumCellular') > -1
+                                            }"
+                                        />
+                                        <p *ngIf="form.controls['addrNumCellular'].errors?.required && form.controls['addrNumCellular'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        <p *ngIf="blockCell" class="erreur"> Attention, le numéro de téléphone saisie est signalé comme « contentieux ». Veuillez saisir un autre numéro de téléphone. La création du contrat ne peut continuer.</p>
+                                        <p *ngIf="contract?.ctxList.indexOf('addrNumCellular') > -1" class="erreur">“Le numéro de téléphone saisie existe déjà en base – Vous	pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome </p>
+                                        <p *ngIf="form.controls['addrNumCellular'].errors?.checkNumber && form.controls['addrNumCellular'].touched" class="erreur">Nous n’acceptons que les chiffres</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Premier Numéro *</label>
+                                        <p>{{contract?.addrNumCellular}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Premier Numéro *</label>
+                                        <p>{{contract?.addrNumCellular}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Deuxième Numéro</label>
+                                        <input type="phone" class="form-control" formControlName="addrNumPhone"
+                                            [ngClass]="{
+                                                error: form.controls.addrNumPhone.touched && form.controls.addrNumPhone.errors || error == 'phone',
+                                                errors: contract?.ctxList.indexOf('addrNumPhone') > -1
+                                            }"
+                                        />
+                                        <p *ngIf="blockPhone" class="erreur"> Attention, le numéro de téléphone saisie est signalé comme « contentieux ». Veuillez saisir un autre numéro de téléphone. La création du contrat ne peut continuer.</p>
+                                        <p *ngIf="contract?.ctxList.indexOf('addrNumPhone') >-1" class="erreur">Le numéro de téléphone saisie existe déjà en base – Vous	pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome </p>
+                                        <p *ngIf="form.controls['addrNumPhone'].errors?.checkNumber && form.controls['addrNumPhone'].touched" class="erreur">Nous n’acceptons que les chiffres</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Deuxième Numéro</label>
+                                        <input type="phone" class="form-control" formControlName="addrNumPhone"
+                                            [ngClass]="{
+                                                error: form.controls.addrNumPhone.touched && form.controls.addrNumPhone.errors || error == 'phone',
+                                                errors: contract?.ctxList.indexOf('addrNumPhone') > -1
+                                            }"
+                                        />
+                                        <p *ngIf="blockPhone" class="erreur"> Attention, le numéro de téléphone saisie est signalé comme « contentieux ». Veuillez saisir un autre numéro de téléphone. La création du contrat ne peut continuer.</p>
+                                        <p *ngIf="contract?.ctxList.indexOf('addrNumPhone') >-1" class="erreur">Le numéro de téléphone saisie existe déjà en base – Vous	pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome </p>
+                                        <p *ngIf="form.controls['addrNumPhone'].errors?.checkNumber && form.controls['addrNumPhone'].touched" class="erreur">Nous n’acceptons que les chiffres</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Deuxième Numéro</label>
+                                        <p>{{contract?.addrNumPhone}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Deuxième Numéro</label>
+                                        <p>{{contract?.addrNumPhone}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                        <label>Numéro de sécurité sociale *</label>
+                                        <input type="text" class="form-control" formControlName="secuSocialNumber"
+                                            [ngClass]="{
+                                                error: form.controls.secuSocialNumber.touched && form.controls.secuSocialNumber.errors || error == 'security',
+                                                errors: contract?.ctxList.indexOf('secuSocialNumber') > -1
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls['secuSocialNumber'].touched">
+                                            <p *ngIf="form.controls['secuSocialNumber'].errors?.required" class="erreur">Ce champs est obligatoire</p>
+                                            <p *ngIf="form.controls['secuSocialNumber'].errors?.checkNumber" class="erreur">Nous n’acceptons que les chiffres</p>
+                                            <p *ngIf="form.controls['secuSocialNumber'].errors?.checkSecu" class="erreur">Attention, le numéro de sécurité social ne correspond pas à certaines informations saisies</p>
+                                        </div>
+                                        <p *ngIf="blockSecu" class="erreur"> Vous avez saisie plusieurs informations qui ont été reconnus comme contentieux. La création du contrat ne peut continuer. </p>
+                                        <p *ngIf="contract?.ctxList.indexOf('secuSocialNumber') > -1" class="erreur">Le numéro de sécurité social saisie existe déjà en base – Vous pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                        <label>Numéro de sécurité sociale *</label>
+                                        <p>{{contract?.secuSocialNumber}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                        <label>Date de naissance *</label>
+                                        <input type="text" class="form-control" mdInput [mdDatepicker]="dateBirth" formControlName="birthDate"
+                                            [ngClass]="{
+                                                error: form.controls.birthDate.touched && form.controls.birthDate.errors
+                                            }"
+                                        />
+                                        <p *ngIf="form.controls['birthDate'].errors?.required && form.controls['birthDate'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        <p *ngIf="form.controls['birthDate'].errors?.checkMajor" class="erreur">Il faut être majeure</p>
+                                        <button mdSuffix [mdDatepickerToggle]="dateBirth"></button>
+                                        <md-datepicker #dateBirth></md-datepicker>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                        <label>Date de naissance *</label>
+                                        <p>{{contract?.birthDate | date}}</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <hr class="separateur"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-12" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || (user?.profile != 'recrue' && !contract?.isSigned)">
+                                        <label>Êtes-vous né(e) en France ?</label>
+                                        <div class="radio-container">
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['isBornInFrance'].value == true}">
+                                                <input [value]=true class="form-control" formControlName="isBornInFrance" type="radio" id="french" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="french" class="">Oui</label>
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['isBornInFrance'].value == false}">
+                                                <input [value]=false class="form-control" formControlName="isBornInFrance" type="radio" id="foreign" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="foreign" class="">Non</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-12" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned) || (user?.profile != 'recrue' && contract?.isSigned)">
+                                        <label>Êtes-vous né(e) en France ?</label>
+                                        <p *ngIf="contract?.isBornInFrance">Yes</p>
+                                        <p *ngIf="!contract?.isBornInFrance">No</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isBornInFrance'].value == false && ((user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned ))">
+                                        <label>Pays de naissance</label>
+                                        <div class="select-container">
+                                            <select class="form-control" formControlName="codeCountryBirthForeign">
+                                                <option *ngFor="let country of listNationality" [value]="country.code"> {{country.labelFull}}</option>
+                                            </select>
+                                            <i class="icon-angle"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isBornInFrance'].value == false && ((user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned))">
+                                        <label>Pays de naissance</label>
+                                        <div *ngFor="let country of listNationality">
+                                            <p *ngIf="country.code == form.controls['codeCountryBirthForeign'].value">{{country.labelFull}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isBornInFrance'].value == true && ((user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned ))">
+                                        <label>CP du lieu de naissance</label>
+                                        <input type="text" class="form-control" mdInput [mdAutocomplete]="autoZips" formControlName="civCodePostalBirth"  (blur)="updateCity('civCodePostalBirth')"
+                                            [ngClass]="{
+                                                error: form.controls.civCodePostalBirth.touched && form.controls.civCodePostalBirth.errors
+                                            }"
+                                        />
+                                        <div *ngIf="form.controls['civCodePostalBirth'].touched">
+                                            <p *ngIf="form.controls['civCodePostalBirth'].errors?.required" class="erreur">Ce champs est obligatoire</p>
+                                            <p *ngIf="form.controls['civCodePostalBirth'].errors?.checkNumber" class="erreur">Nous n’acceptons que les chiffres</p>
+                                        </div>
+                                        <md-autocomplete #autoZips="mdAutocomplete">
+                                            <md-option *ngFor="let zip of filteredZips" [value]="zip">
+                                                {{ zip }}
+                                            </md-option>
+                                        </md-autocomplete>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isBornInFrance'].value == true && ((user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned))">
+                                        <label>CP du lieu de naissance</label>
+                                        <p>{{contract?.civCodePostalBirth}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isBornInFrance'].value == true && ((user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned ))">
+                                        <label>Lieu de naissance *</label>
+                                        <input type="text" class="form-control" mdInput [mdAutocomplete]="auto" formControlName="civCityBirth" (blur)="updateCity('civCityBirth')"
+                                            [ngClass]="{
+                                                error: form.controls.civCityBirth.touched && form.controls.civCityBirth.errors
+                                            }"
+                                        />
+                                        <p *ngIf="form.controls['civCityBirth'].errors?.required && form.controls['civCityBirth'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        <md-autocomplete #auto="mdAutocomplete">
+                                            <md-option *ngFor="let state of filteredStates" [value]="state">
+                                                {{ state }}
+                                            </md-option>
+                                        </md-autocomplete>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isBornInFrance'].value == true && ((user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned))">
+                                        <label>Lieu de naissance *</label>
+                                        <p>{{contract?.civCityBirth}}</p>
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <label>Nationalité *</label>
+                                        <div class="radio-container" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || (user?.profile != 'recrue' && !contract?.isSigned)">
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['isFrench'].value == true}">
+                                                <input class="form-control" formControlName="isFrench" [value]=true type="radio" id="fr" style="position: absolute;opacity: 0;">
+                                            </div>
+                                            <label for="fr" class="">Française</label>
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['isFrench'].value == false}">
+                                                <input class="form-control" formControlName="isFrench" [value]=false type="radio" id="autre" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="autre" class="">Etrangère</label>
+                                        </div>
+                                        <div class="radio-container" *ngIf="((user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned) || (user?.profile != 'recrue' && contract?.isSigned)) && form.controls['isFrench'].value">
+                                            <label class="">Française</label>
+                                        </div>
+                                        <!-- /.radio-container -->
+                                        <div *ngIf="form.controls['isFrench'].value == false && ((user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned ))" class="select-container">
+                                            <select class="form-control" formControlName="codeNationality">
+                                                <option *ngFor="let country of listNationality" [value]="country.code"> {{country.labelFull}}</option>
+                                            </select>
+                                            <i class="icon-angle"></i>
+                                            <p *ngIf="form.controls['codeNationality'].errors?.required && form.controls['codeNationality'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        </div>
+                                        <div *ngIf="form.controls['isFrench'].value == false && ((user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned))" class="select-container">
+                                            <div *ngFor="let country of listNationality">
+                                                <p *ngIf="country.code == contract?.codeNationality">{{country.labelFull}}</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- /.select-container -->
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isFrench'].value == false && (!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>N° de titre de séjour *</label>
+                                        <input type="text" class="form-control" formControlName="numberResidentPermit"/>
+                                        <p *ngIf="form.controls['numberResidentPermit'].errors?.required && form.controls['numberResidentPermit'].touched" class="erreur">Ce champs est obligatoire</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isFrench'].value == false && user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>N° de titre de séjour *</label>
+                                        <input type="text" class="form-control" formControlName="numberResidentPermit"/>
+                                        <p *ngIf="form.controls['numberResidentPermit'].errors?.required && form.controls['numberResidentPermit'].touched" class="erreur">Ce champs est obligatoire</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isFrench'].value == false && contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>N° de titre de séjour *</label>
+                                        <p>{{contract?.numberResidentPermit}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6" *ngIf="form.controls['isFrench'].value == false && ((contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned))">
+                                        <label>N° de titre de séjour *</label>
+                                        <p>{{contract?.numberResidentPermit}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6 datepicker-container" *ngIf="form.controls['isFrench'].value == false && (!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Date de validité du titre de séjour *</label>
+                                        <input type="text" [value]="dateValidationResidentPermit | date: 'yyyy-MM-dd'" mdInput [mdDatepicker]="picker2" class="form-control" formControlName="dateValidationResidentPermit" 
+                                            [ngClass]="{
+                                                error: form.controls.dateValidationResidentPermit.touched && form.controls.dateValidationResidentPermit.errors
+                                            }"
+                                        />
+                                        <p *ngIf="form.controls['dateValidationResidentPermit'].errors?.required && form.controls['dateValidationResidentPermit'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        <button mdSuffix [mdDatepickerToggle]="picker2"></button>
+                                        <md-datepicker #picker2></md-datepicker>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6 datepicker-container" *ngIf="form.controls['isFrench'].value == false && user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned">
+                                        <label>Date de validité du titre de séjour *</label>
+                                        <input type="text" [value]="dateValidationResidentPermit | date: 'yyyy-MM-dd'" mdInput [mdDatepicker]="picker2" class="form-control" formControlName="dateValidationResidentPermit" 
+                                            [ngClass]="{
+                                                error: form.controls.dateValidationResidentPermit.touched && form.controls.dateValidationResidentPermit.errors
+                                            }"
+                                        />
+                                        <p *ngIf="form.controls['dateValidationResidentPermit'].errors?.required && form.controls['dateValidationResidentPermit'].touched" class="erreur">Ce champs est obligatoire</p>
+                                        <button mdSuffix [mdDatepickerToggle]="picker2"></button>
+                                        <md-datepicker #picker2></md-datepicker>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6 datepicker-container" *ngIf="form.controls['isFrench'].value == false && contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Date de validité du titre de séjour *</label>
+                                        <p>{{contract?.dateValidationResidentPermit | date}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6 datepicker-container" *ngIf="form.controls['isFrench'].value == false && ((contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned))">
+                                        <label>Date de validité du titre de séjour *</label>
+                                        <p>{{contract?.dateValidationResidentPermit | date}}</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="form.controls['isFrench'].value == false">
+                                    <div class="col-xs-12">
+                                        <p class="informations"><i class="icon-warning"></i> Merci de transmettre rapidement par mail (contrats@stanhome.fr) ou par courrier (StanhomeFrance -Service des Ressources Humaines Allée des Primevères • BP10 • 56204 LA GACILLY Cedex) la copie recto verso de votre titre de séjour.</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                    <div class="col-xs-12 col-lg-6">
+                                        <label>Fonctionnaire</label>
+                                        <div class="radio-container">
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['isCivilServant'].value == true}">
+                                                <input [value]=true class="form-control" formControlName="isCivilServant" type="radio" id="oui" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="oui" class="">Oui</label>
+                                            <div class="iradio" [ngClass]="{'checked': form.controls['isCivilServant'].value == false}">
+                                                <input [value]=false class="form-control" formControlName="isCivilServant" type="radio" id="non" style="position: absolute; opacity: 0;">
+                                            </div>
+                                            <label for="non" class="">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                    <div class="col-xs-12 col-lg-6">
+                                        <label>Fonctionnaire</label>
+                                        <p *ngIf="contract?.isCivilServant">Yes</p>
+                                        <p *ngIf="!contract?.isCivilServant">No</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="form.controls['isCivilServant'].value == true">
+                                    <div class="col-xs-12">
+                                        <p class="informations"><i class="icon-warning"></i> Merci de transmettre rapidement par mail (contrats@stanhome.fr) ou par courrier (StanhomeFrance -Service des Ressources Humaines Allée des Primevères • BP10 • 56204 LA GACILLY Cedex) la copie recto verso de votre titre de séjour.</p>
+                                    </div>
+                                </div>
+                                <div class="row hidden-xs hidden-sm hidden-md">
+                                    <div class="col-xs-12">
+                                        <hr class="separateur"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>2/ Adresse personnelle</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>3/ Fiche d'information</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>4/ Coordonnées bancaires</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>5/ Décharge transporteur</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>6/ Signature</a></div>
+                        </div>
+                        <div class="recapitulatif recapitulatif-0" style="display: block;">
+                            <p class="titre-recap"><span>Vérification de vos informations</span></p>
+                            <ul class="liste-recap">
+                                <li *ngFor="let type of validationInformation" 
+                                    [ngClass]="{
+                                        valid : !form.controls[type.control].errors || form.controls[type.control].valid == true,
+                                        error : form.controls[type.control].touched && form.controls[type.control].errors, 
+                                        erreur : (error == 'email' && error != '' && type.control == 'addrEmail') || (error == 'cell' && error != '' && type.control == 'addrNumCellular') || (error == 'phone' && error != '' && type.control == 'addrNumPhone') || (error == 'security' && error != '' && type.control == 'secuSocialNumber'),
+                                        errors : contract?.ctxList.indexOf(type.control) > -1
+                                    }"
+                                >
+                                    <i 
+                                        [ngClass]="{
+                                            'icon-check-mark' : !form.controls[type.control].errors,
+                                            'icon-check-unmark' : form.controls[type.control].touched && form.controls[type.control].errors,
+                                            'icon-check-unmark': (error == 'email' && error != '' && type.control == 'addrEmail') || (error == 'cell' && error != '' && type.control == 'addrNumCellular') || (error == 'phone' && error != '' && type.control == 'addrNumPhone') || (error == 'security' && error != '' && type.control == 'secuSocialNumber'),
+                                            'icon-check-unmarks': contract?.ctxList.indexOf(type.control) > -1
+                                        }"
+                                    ></i>
+                                    {{type.value}}
+                                </li>
+                            </ul>
+                            <a (click)="submit()" title="" class="btn-vert">Suivant</a>
+                            <p class="asterisques">* Les champs obligatoires.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,75 @@
+<section class="bo-content mescontrats">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-4">
+                <h1 class="titre-page">Photos</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="contrat" id="photos-mobile">
+                    <table class="table-hover hidden-xs hidden-md  hidden-sm">
+                        <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Code</th>
+                                <th>Image</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let pack of listPacks; let i = index;">
+                                <td>{{pack.labelFull}}</td>
+                                <td>{{pack.type}}_{{pack.code}}</td>
+                                <td>
+                                    <div *ngIf="displayImgTab[i] && pack.img != null" class="dz-image">
+                                        <img src="{{pack.img}}">
+                                    </div>
+                                    <p *ngIf= "!displayImgTab[i] && pack.img != null">Cliquez sur l'icône <i class="glyphicon glyphicon-eye-open"></i> pour visualiser la photo</p>
+                                </td>
+                                <td class="boutons">
+                                    <a *ngIf= "pack.img != null" (click)="displayImg(i)" class="lightbox btn-gris-border">
+                                        <i *ngIf="!displayImgTab[i]" class="glyphicon glyphicon-eye-open"></i>
+                                        <i *ngIf="displayImgTab[i]" class="glyphicon glyphicon-eye-close"></i>
+                                    </a>
+                                    <a (click)="openModalUpload(pack)" title="" class="btn-bleu-plein widthauto"><i class="glyphicon glyphicon-upload"></i></a>
+                                    <a *ngIf= "pack.img != null" (click)="deletePictureReference(pack.idPictureReference)" title="" class="lightbox btn-gris-border" lightbox="confirmation-suppression"><i class="icon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bo-content mescontrats hidden-lg">
+    <div class="col-xs-12">
+        <ul class="table-mobile" *ngFor="let pack of listPacks; let i = index;">
+            <li class="contrat" [ngClass]="{active: expandedItems[i]}">
+                <div class="contrat-nom">
+                    <p>{{pack.labelFull}}</p>
+                </div>
+                <div class="contrat-saisie">
+                    <p>{{pack.type}}_{{pack.code}}<br/></p>
+                </div>
+                <div class="deroule">
+                    <div class="contrat-nom">
+                        <div *ngIf="displayImgTab[i] && pack.img != null" class="dz-image">
+                            <img src="{{pack.img}}">
+                        </div>
+                    </div>
+                    <div class="btns-actions">
+                        <a *ngIf= "pack.img != null" (click)="displayImg(i)" class="lightbox btn-gris-border">
+                            <i *ngIf="!displayImgTab[i]" class="glyphicon glyphicon-eye-open"></i>
+                            <i *ngIf="displayImgTab[i]" class="glyphicon glyphicon-eye-close"></i>
+                        </a>
+                        <a (click)="openModalUpload(pack)" title="" class="btn-bleu-plein widthauto"><i class="glyphicon glyphicon-upload"></i></a>
+                        <a *ngIf= "pack.img != null" (click)="deletePictureReference(pack.idPictureReference)" title="" class="lightbox btn-gris-border" lightbox="confirmation-suppression"><i class="icon-trash"></i></a>
+                    </div>
+                </div>
+                <i class="icon-triangle"></i><div class="openInfo" (click)="expanded(i)"></div>
+            </li>
+        </ul>
+    </div>
+</section>

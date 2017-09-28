@@ -1,0 +1,238 @@
+@media (max-width: $breack-lg - 1)
+    .sidentifier
+        .content
+            padding-top: 20px
+            top: 0
+            transform: translate(0,0)
+            
+    .r-tabs-panel
+        border-bottom: 1px solid $gris_moyen
+        
+    section.content .creation-contrat .onglets .lien-noir
+        margin-top: 20px
+        position: relative
+        top: 0
+        transform: translate(0px)
+        
+    section.content .creation-contrat .onglets .r-tabs-panel input.smaller[type="text"], section.content .creation-contrat .onglets .r-tabs-panel input.smaller[type="mail"], section.content .creation-contrat .onglets .r-tabs-panel input.smaller[type="phone"]
+        max-width: 58px
+    section.content .creation-contrat .onglets .r-tabs-panel input.xsmall[type="text"], section.content .creation-contrat .onglets .r-tabs-panel input.xsmall[type="mail"], section.content .creation-contrat .onglets .r-tabs-panel input.xsmall[type="phone"]
+        max-width: 40px
+        
+    .ui-dialog
+        position: absolute
+        top: 10px
+    .content table
+        margin-top: 30px
+        
+        
+    section.content table tr td.boutons
+        height: auto
+        min-width: 253px
+        padding-bottom: 10px
+        a
+            margin-bottom: 5px
+            
+    .onglets 
+        .divers-container
+            .img-container
+                float: right
+                
+    section.content.mescontrats
+        background: #fff
+        width: 100%
+        padding-bottom: 0
+        ul.table-mobile
+            width: 100%
+            display: inline-block
+            li.contrat
+                transition: all 0.3s ease
+                cursor: pointer
+                width: 100%
+                padding: 30px 10px
+                margin: 0
+                display: inline-block
+                border-bottom: 1px solid #e6ecf3
+                background: #fff
+                position: relative
+                .icon-triangle
+                    color: #8c8c8c
+                    font-size: 8px
+                    position: absolute
+                    right: 19px
+                    top: 42px
+                    transform: rotate(90deg)
+                .icon-warning
+                    color: red
+                .contrat-nom, .contrat-saisie
+                    width: 50%
+                    display: inline-block
+                    float: left
+                    padding-left: 30px
+                    span
+                        font-size: 14px
+                        font-weight: 400
+                        line-height: 15px
+                
+                .deroule
+                    display: none
+                    .contrat-nom, .contrat-saisie
+                        padding-top: 16px
+                    .infos-complementaires
+                        font-size: 14px
+                        font-weight: 400
+                        line-height: 18px
+                    div:not(.btns-actions)
+                        a
+                            color: #313238
+                    .contrat-nom
+                        clear: both
+                .contrat-nom
+                    p
+                        color: #313238
+                        font-size: 18px
+                        font-weight: 700
+                        line-height: 15px
+                .contrat-saisie
+                    p
+                        color: #313238
+                        font-size: 16px
+                        font-weight: 400
+                        line-height: 16px
+                        padding-right: 17px
+                .btns-actions
+                    width: 100%
+                    display: inline-block
+                    padding-top: 20px
+                    a
+                        margin-bottom: 4px
+                        border-radius: 0
+                        float: left
+                        display: inline-block
+                        width: calc(50% - 2px)
+                        height: 39px
+                        font-size: 16px
+                        font-weight: 700
+                        line-height: 34px
+                        margin-left: 2px
+                        i.icon-hand
+                            font-size: 15px
+                            transform: translateY(1px)
+                        i.icon-check-mark
+                            font-size: 13px
+                            transform: translateY(0px)
+                        i.icon-oeil
+                            transform: translateY(6px);
+                        &:nth-child(2n+1)
+                            margin-right: 2px
+                            margin-left: 0px
+                &:nth-child(2n+1)
+                    background: #f4f7fb
+                &.active
+                    background: #dde2e8
+                    padding: 18px 10px 8px
+                    .icon-triangle
+                        transform: rotate(-90deg)
+                &.rose
+                    background-color: #ffe9e9
+                &.vert
+                    background-color: #ebffe5
+                    
+    body:not(.sidentifier) .header
+        .logo
+            width: 63%
+            display: inline-block
+            float: left
+            .burger
+                background: url('../img/burger.svg') no-repeat 0 0 transparent
+                width: 29px
+                height: 21px
+                background-size: 100% 100%
+                display: inline-block
+                float: left
+                margin-left: 27px
+                margin-top: 32px
+                &.open
+                    background: url('../img/close-menu.svg') no-repeat 0 0 transparent
+                    width: 22px
+                    height: 23px
+                    margin-left: 29px
+            img
+                max-width: 193px
+                left: 77px
+                right: auto
+                top: 53%
+        .profil
+            float: left
+            width: 37%
+            display: inline-block
+            padding: 0 19px
+            .user
+                width: 100%
+                .nom
+                    font-size: 15px
+                    line-height: 18px
+                .user-content
+                    width: 100%
+                    height: 90px
+                    padding-top: 0
+                    .name
+                        position: absolute
+                        top: 50%
+                        padding-right: 7px
+                        transform: translateY(-50%)
+                        + .lien-vert
+                            bottom: 10px
+                            position: absolute
+                    
+    section.content 
+        &.mescontrats 
+            .contrat
+                margin-top: 5px
+            .titre-page
+                padding-top: 4px
+        .titre-page
+            font-size: 35px
+            font-weight: 400
+            line-height: 56px
+            padding-top: 4px
+            text-align: center
+        .contrat 
+            .filtre 
+                padding-bottom: 11px
+                text-align: center
+                label
+                    font-size: 15px
+                    float: none
+                .select-container
+                    float: none
+                    select
+                        color: #7b7e7f
+                        font-weight: 700
+            .recherche-container 
+                input
+                    font-size: 18px
+                    
+                    
+                    
+@media (max-width: $breack-sm - 1)
+    body:not(.sidentifier) 
+        .header 
+            .logo 
+                width: 50%
+                img
+                    width: 60%
+                    left: 56px
+                .burger
+                    width: 23px
+                    margin-left: 19px
+                    margin-top: 35px
+                    &.open
+                        width: 15px
+                        margin-left: 25px
+                        margin-top: 36px
+            .profil
+                width: 50%
+                
+    img
+        max-width: 100%

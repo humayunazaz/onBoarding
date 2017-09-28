@@ -1,0 +1,168 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1 class="titre-page">Créer un contrat</h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                    <form [formGroup]="form" novalidate>
+                        <div class="onglets tabs r-tabs">
+                            <ul class="r-tabs-nav">
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                [ngClass]="{
+                                    vert: contract?.isStepOneComplete,
+                                    erreur: contract?.isStepOneComplete == false || contract?.ctxList.indexOf('addrEmail') > -1 || contract?.ctxList.indexOf('addrNumCellular') > -1 || contract?.ctxList.indexOf('addrNumPhone') > -1 || contract?.ctxList.indexOf('secuSocialNumber') > -1
+                                }"
+                                ><a class="active r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-check"></i><br />1/ Etat civil</a></li>
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepTwoComplete,
+                                        erreur: contract?.isStepTwoComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-check"></i><br />2/ Adresse personnelle</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepThreeComplete,
+                                        erreur: contract?.isStepThreeComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-check"></i><br />3/ Fiche d'information</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-active"><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-pen"></i><br />4/ Coordonnées bancaires</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFiveComplete,
+                                        erreur: contract?.isStepFiveComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-check"></i><br />5/ Décharge transporteur</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepSixComplete,
+                                        erreur: contract?.isStepSixComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-check"></i><br />6/ Signature</a></li>
+                            </ul>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>1/ Etat civil</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>2/ Adresse personnelle</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>3/ Fiche d'information</a></div>
+                            <div class="r-tabs-accordion-title r-tabs-state-active"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-pen"></i><br>4/ Coordonnées bancaires</a></div>
+                            <div id="bancaire" class="r-tabs-panel r-tabs-state-active">
+                                <div class="row">
+                                    <div class="col-xs-12" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Titulaire du compte</label>
+                                        <input type="text" class="form-control" formControlName="cardOwnerName" appUppercase/>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Titulaire du compte</label>
+                                        <input type="text" class="form-control" formControlName="cardOwnerName" appUppercase/>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Titulaire du compte</label>
+                                        <p>{{contract?.cardOwnerName}}</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Titulaire du compte</label>
+                                        <p>{{contract?.cardOwnerName}}</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>IBAN</label>
+                                        <input type="text" class="form-control" formControlName="iban"
+                                            [ngClass]="{
+                                                error: form.controls.iban.touched && form.controls.iban.errors || message != null,
+                                                errors: contract?.ctxList.indexOf('iban') > -1
+                                            }"
+                                        />
+                                        <p *ngIf="contract?.ctxList.indexOf('iban') > -1" class="erreur">“L’iban saisie existe déjà en base – Vous pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome”</p>
+                                        <p *ngIf="blockIban" class="erreur"> Attention, l’iban saisie est signalé comme « contentieuse ». Veuillez saisir un autre iban. La création du contrat ne peut continuer.</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>IBAN</label>
+                                        <input type="text" class="form-control" formControlName="iban"
+                                            [ngClass]="{
+                                                error: form.controls.iban.touched && form.controls.iban.errors || message != null,
+                                                errors: contract?.ctxList.indexOf('iban') > -1
+                                            }"
+                                        />
+                                        <p *ngIf="contract?.ctxList.indexOf('iban') > -1" class="erreur">“L’iban saisie existe déjà en base – Vous pouvez continuer de saisir le contrat – il sera étudié par la RH de Stanhome”</p>
+                                        <p *ngIf="blockIban" class="erreur"> Attention, l’iban saisie est signalé comme « contentieuse ». Veuillez saisir un autre iban. La création du contrat ne peut continuer.</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>IBAN</label>
+                                        <p>{{contract?.iban}}</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>IBAN</label>
+                                        <p>{{contract?.iban}}</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                        <label>Code BIC</label>
+                                        <input type="text" class="form-control" formControlName="codeBic"
+                                            [ngClass]="{
+                                                error: form.controls.codeBic.touched && form.controls.codeBic.errors
+                                            }"
+                                        />
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                        <label>Code BIC</label>
+                                        <input type="text" class="form-control" formControlName="codeBic"
+                                            [ngClass]="{
+                                                error: form.controls.codeBic.touched && form.controls.codeBic.errors
+                                            }"
+                                        />
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                        <label>Code BIC</label>
+                                        <p>{{contract?.codeBic}}</p>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                        <label>Code BIC</label>
+                                        <p>{{contract?.codeBic}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-lg-6">
+                                        <label for="" class="nocenter">Votre créancier à noter</label>
+                                        <p>Nom du créancier : Stanhome<br />
+                                            I.C.S FR87ZZZ200689<br />
+                                            Adresse créancier : La croix des archers<br />
+                                            5620 La gacilly<br />
+                                            France</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>5/ Décharge transporteur</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>6/ Signature</a></div>
+                        </div>
+                        <div class="recapitulatif recapitulatif-0" style="display: block;">
+                            <p class="titre-recap"><span>Vérification de vos informations</span></p>
+                            <ul class="liste-recap">
+                                <li *ngFor="let type of validationInformation" 
+                                    [ngClass]="{
+                                        valid : !form.controls[type.control].errors && form.controls[type.control].value != null,
+                                        error : form.controls[type.control].touched && form.controls[type.control].errors && form.controls[type.control].value == '',
+                                        error : errorAttribute == type.control && message != null, 
+                                        errors : contract?.ctxList.indexOf(type.control) > -1
+                                    }"
+                                >
+                                    <i 
+                                        [ngClass]="{
+                                            'icon-check-mark' : !form.controls[type.control].errors && form.controls[type.control].value != null,
+                                            'icon-check-unmark' : form.controls[type.control].touched && form.controls[type.control].errors && form.controls[type.control].value == '',
+                                            'icon-check-unmark' : errorAttribute == type.control && message != null, 
+                                            'icon-check-unmarks' : contract?.ctxList.indexOf(type.control) > -1
+                                        }"
+                                    ></i>
+                                    {{type.value}}
+                                </li>
+                            </ul>
+                            <a (click)="submit()" title="" class="btn-vert">Suivant</a>
+                            <p class="asterisques">* Les champs obligatoires.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

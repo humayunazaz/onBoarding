@@ -1,0 +1,121 @@
+<section class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <h1 class="titre-page">Créer un contrat</h1>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <p *ngIf="contract && contract.firstName && contract.lastName" class="titre-secondaire"><i class="femme"></i> Contrat de {{ contract.firstName }} {{ contract.lastName }} </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="creation-contrat">
+                    <form [formGroup]="form" novalidate>
+                        <div class="onglets tabs r-tabs">
+                            <ul class="r-tabs-nav">
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                [ngClass]="{
+                                    vert: contract?.isStepOneComplete,
+                                    erreur: contract?.isStepOneComplete == false || contract?.ctxList.indexOf('addrEmail') > -1 || contract?.ctxList.indexOf('addrNumCellular') > -1 || contract?.ctxList.indexOf('addrNumPhone') > -1 || contract?.ctxList.indexOf('secuSocialNumber') > -1
+                                }"
+                                ><a class="active r-tabs-anchor" [routerLink]="['/contract/step-one', id]" title=""><i class="icon-check"></i><br />1/ Etat civil</a></li>
+                                <li class="r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepTwoComplete,
+                                        erreur: contract?.isStepTwoComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-two', id]" title="" ><i class="icon-check"></i><br />2/ Adresse personnelle</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepThreeComplete,
+                                        erreur: contract?.isStepThreeComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-three', id]" title=""><i class="icon-check"></i><br />3/ Fiche d'information</a></li>
+                                <li class=" r-tabs-tab r-tabs-state-default"
+                                    [ngClass]="{
+                                        vert: contract?.isStepFourComplete,
+                                        erreur: contract?.isStepFourComplete == false || contract?.ctxList.indexOf('iban') > -1
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-four', id]" title=""><i class="icon-check"></i><br />4/ Coordonnées bancaires</a></li>
+                                <li class="r-tabs-state-active r-tabs-tab"><a class="r-tabs-anchor" [routerLink]="['/contract/step-five', id]" title=""><i class="icon-pen"></i><br />5/ Décharge transporteur</a></li>
+                                <li class="r-tabs-state-default r-tabs-tab"
+                                    [ngClass]="{
+                                        vert: contract?.isStepSixComplete,
+                                        erreur: contract?.isStepSixComplete == false 
+                                    }"
+                                ><a class="r-tabs-anchor" [routerLink]="['/contract/step-six', id]" title=""><i class="icon-check"></i><br />6/ Signature</a></li>
+                            </ul>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-one', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>1/ Etat civil</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-two', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>2/ Adresse personnelle</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-three', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>3/ Fiche d'information</a></div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-four', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>4/ Coordonnées bancaires</a></div>
+                            <div class="r-tabs-accordion-title r-tabs-state-active"><a [routerLink]="['/contract/step-five', id]" class="r-tabs-anchor"><i class="icon-pen"></i><br>5/ Décharge transporteur</a></div>
+                            <div id="decharge" class="r-tabs-panel r-tabs-state-active">
+                                <div class="row">
+                                    <div class="col-xs-12" *ngIf="(user?.profile == 'recrue' && !contract?.isRecorded && !contract?.isSigned) || ( user?.profile != 'recrue' && !contract?.isSigned )">
+                                        <p class="texte"><b>En cas d’absence, lieu de dépôt des colis à votre domicile ou livraison à une autre adresse (même ville)</b></p>
+                                        <div class="checkbox-container nolabel">
+                                            <input type="checkbox" id="okCarrier" formControlName="okCarrier"/>
+                                            <label for="okCarrier">J'autorise Stanhome à transmettre mon numéro de téléphone au transporteur.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12" *ngIf="(user?.profile == 'recrue' && contract?.isRecorded) || (user?.profile != 'recrue' && contract?.isSigned) || (user?.profile == 'recrue' && !contract?.isRecorded && contract?.isSigned)">
+                                        <p class="texte"><b>En cas d’absence, lieu de dépôt des colis à votre domicile ou livraison à une autre adresse (même ville)</b></p>
+                                        <div class="checkbox-container nolabel">
+                                            <label *ngIf='contract?.okCarrier'>Yes: J'autorise Stanhome à transmettre mon numéro de téléphone au transporteur.</label>
+                                            <label *ngIf='!contract?.okCarrier'>No: J'autorise Stanhome à transmettre mon numéro de téléphone au transporteur.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(!contract?.isSigned || user?.profile == 'RH' || user?.profile == 'ADMIN') && user?.profile != 'recrue'">
+                                    <div class="col-xs-12">
+                                        <p class="instructions t-right">{{characterEnter}} caractères sur 70</p>
+                                        <textarea class="form-control" formControlName="addressCarrier" name="addressCarrier" id="addressCarrier" cols="30" rows="10" [maxlength]="maxLimit" placeholder="Saisissez vos informations"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="user?.profile == 'recrue' && !contract?.isRecorded && !contract.isSigned">
+                                    <div class="col-xs-12">
+                                        <p class="instructions t-right">{{characterEnter}} caractères sur 70</p>
+                                        <textarea class="form-control" formControlName="addressCarrier" name="addressCarrier" id="addressCarrier" cols="30" rows="10" [maxlength]="maxLimit" placeholder="Saisissez vos informations"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="contract?.isSigned && user?.profile != 'RH' && user?.profile != 'ADMIN' && user?.profile != 'recrue'">
+                                    <div class="col-xs-12">
+                                        <p class="instructions t-right">{{characterEnter}} caractères sur 70</p>
+                                        <p class="instructions">{{contract?.addressCarrier}}</p>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="(contract?.isRecorded && user?.profile == 'recrue') || (!contract?.isRecorded && user?.profile == 'recrue' && contract?.isSigned)">
+                                    <div class="col-xs-12">
+                                        <p class="instructions t-right">{{characterEnter}} caractères sur 70</p>
+                                        <p class="instructions">{{contract?.addressCarrier}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <img src="../../../../../assets/img/information.jpg" alt=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="r-tabs-accordion-title"><a [routerLink]="['/contract/step-six', id]" class="r-tabs-anchor"><i class="icon-check"></i><br>6/ Signature</a></div>
+                        </div>
+                        <div class="recapitulatif recapitulatif-0" style="display: block;">
+                            <p class="titre-recap"><span>Vérification de vos informations</span></p>
+                            <ul class="liste-recap">
+                                <!--<li [ngClass]="{'error': form.controls['addrEmail'].value == null && submitted , 'valid': form.controls['addrEmail'].value != null}">-->
+                                <!--<i [ngClass]="{'icon-check-mark':!(form.controls['addrEmail'].value == null && submitted), 'icon-uncheck': (form.controls['addrEmail'].value == null && submitted) || (form.controls['addrEmail'].dirty && form.controls['addrEmail'].value == null)}"></i>-->
+                                <!--Email<br>-->
+                                <!--</li>-->
+                                <!--<li><i></i>Autorisation de transmission</li>-->
+                                <!--<li><i></i>Dépot en cas d'abscence</li>-->
+                            </ul>
+                            <a (click)="submit()" title="" class="btn-vert">Suivant</a>
+                            <p class="asterisques">* Les champs obligatoires.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

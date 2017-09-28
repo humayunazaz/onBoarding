@@ -1,0 +1,46 @@
+<header class="header" [ngClass]="{'coach' : profile != 'recruit', 'recrute': profile == 'recruit'}">
+    <div class="logo">
+        <a title="Menu" class="hidden-lg burger" (click)="openMenu()"></a>
+        <a title=""><img src="assets/img/logo.svg" alt=""/></a>
+    </div>
+    <!-- /.logo -->
+    <div class="menu hidden-xs hidden-sm hidden-md">
+        <div>
+            <a class="lien-blanc" (click)="openModal()"><i class="icon-addcontrat"></i>  Créer un contrat </a>
+        </div>
+        <div>
+            <a [hidden]="profile == 'recruit'" routerLink="/contract/list" title="" class="lien"><i class="icon-contrats"></i> Mes contrats</a>
+            <a [hidden]="profile != 'recruit'" routerLink="/contract/list" title="" class="lien"><i class="icon-contrats"></i> Mon contrat</a>
+
+        </div>
+    </div>
+    <!-- /.menu -->
+    <div class="profil">
+        <div class="user">
+            <div class="user-content">
+                <i class="icon-user"></i>
+                <div class="name">
+                    <p *ngIf="user" class="nom">{{ user.firstName }} {{ user.lastName }}</p>
+                    <p [hidden]="profile == 'recruit'" class="fonction">{{ profession }}</p>
+                </div>
+                <a [hidden]="profile != 'ddzm'" title="" class="lien-vert lightbox-deleguer hidden-xs hidden-sm">> Déléguer ses droits</a>
+            </div>
+        </div>
+        <!-- /.user -->
+        <div class="deco hidden-xs hidden-sm hidden-md">
+            <a (click)="logout()" title=""><i class="icon-deconnexion"></i> Déconnecter</a>
+        </div>
+        <!-- /.deco -->
+    </div>
+    <!-- /.profil -->
+    <div class="menu-mobile hidden-lg">
+        <ul>
+            <li [hidden]="profile != 'recruit'"><a routerLink="/contract/list" title="" class="active">> Mon contrat</a></li>
+            <li [hidden]="profile == 'recruit'"><a routerLink="/contract/list" title="" class="active">> Mes contrats</a></li>
+            <li [hidden]="profile == 'recruit'"><a (click)="openModal()" title="">> Créer un contrat</a></li>
+            <li [hidden]="profile != 'ddzm'"><a>> Déléguer ses droits</a></li>
+            <li (click)="logout()"><a title="">> Déconnexion</a></li>
+        </ul>
+    </div>
+</header>
+<router-outlet></router-outlet>

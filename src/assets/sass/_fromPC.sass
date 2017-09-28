@@ -1,0 +1,68 @@
+@media (min-width: $breack-lg)
+    header
+        .logo
+            width: 262px
+            float: left
+            display: inline-block
+        .menu
+            width: 627px
+        .profil
+            width: calc(100% - 262px - 627px)
+    section.content
+        .titre-page
+            font-size: 35px
+        .titre-secondaire
+            font-size: 23px
+            padding-left: 63px
+            i
+                width: 48px
+                height: 48px
+                
+        .creation-contrat
+            display: inline-block
+            width: 100%
+            .recapitulatif
+                width: 200px
+                float: left
+                .asterisques
+                    padding-left: 0
+            .onglets
+                float: left
+                display: inline-block
+                width: calc(100% - 200px)
+                &.no-tabs
+                    width: 100%
+                .r-tabs-nav
+                    height: 100%
+                    li
+                        width: auto
+                .r-tabs-panel
+                    
+                    .col-xs-12:not(.col-lg-6)
+                        .radio-container
+                            width: 439px
+                            clear: none
+                            .iradio
+                                clear: none
+                            label[for=fr]
+                                margin-right: 148px
+                                clear: none
+                            &.allwidth
+                                width: 100%
+                                margin-top: 0
+                            > .divers-container
+                                width: 33.33%
+                                float: left
+                                display: inline-block
+                                .img-container
+                                    clear: both
+                                    display: inline-block
+                                    float: left
+                                    margin-top: 20px
+                                    position: relative
+                        .select-container
+                            width: calc(100% - 140px - 439px - 33px)
+                            float: left
+                            margin-left: 0
+                            clear: none
+                    

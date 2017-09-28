@@ -1,0 +1,73 @@
+<section class="bo-content mescontrats">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-lg-4">
+                <h1 class="titre-page">Utilisateurs</h1>
+            </div>
+            <div id="start-import" class="col-xs-12 col-md-8">
+                <button type="button" class="btn" style="cursor: pointer;" (click)="openModalCreateUser()">Créer un utilisateur</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="contrat">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="recherche-container">
+                                <input type="text" placeholder="Rechercher une personne (nom, prenom, email ...)" class="hidden-xs hidden-sm hidden-md" [ngModel]="search" (ngModelChange)="updateSearch($event)"/>
+                                <input type="text" placeholder="Rechercher une personne" class="hidden-lg" [ngModel]="search" (ngModelChange)="updateSearch($event)"/>
+                                <button type="submit" (click)="doSearch()"><i class="icon-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table-hover hidden-xs hidden-sm">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Email</th>
+                                <th>Rôle</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of usersList">
+                                <td>{{ user.lastName }} {{ user.firstName }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.profile }}</td>
+                                <td class="boutons">
+                                    <a (click)="openModalEditUser(user)" title="" class="btn-bleu-plein widthauto"><i class="icon-pencil"></i></a>
+                                    <a (click)="deleteUser(user)" title="" class="lightbox btn-gris-border" lightbox="confirmation-suppression"><i class="icon-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bo-content mescontrats hidden-md hidden-lg">
+    <div class="col-xs-12">
+        <ul class="table-mobile" *ngFor="let user of usersList; let i = index;">
+            <li class="contrat" [ngClass]="{active: expandedItems[i]}">
+                <div class="contrat-nom">
+                    <p>{{user.firstname}}<br />{{user.lastname}}</p>
+                </div>
+                <div class="contrat-saisie">
+                    <p>{{user.email}}<br/></p>
+                </div>
+                <div class="deroule">
+                    <div class="contrat-nom">
+                        <p class="infos-complementaires">{{ user.profile }}</p>
+                    </div>
+                    <div class="btns-actions">
+                        <a (click)="openModalEditUser(user)" title="" class="btn-bleu-plein widthauto"><i class="icon-pencil"></i></a>
+                        <a (click)="deleteUser(user)" title="" class="lightbox btn-gris-border" lightbox="confirmation-suppression"><i class="icon-trash"></i></a>
+                    </div>
+                </div>
+                <i class="icon-triangle"></i><div class="openInfo" (click)="expanded(i)"></div>
+            </li>
+        </ul>
+    </div>
+</section>
+

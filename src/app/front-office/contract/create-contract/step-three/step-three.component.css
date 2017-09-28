@@ -1,0 +1,17 @@
+.erreur{
+    color: red!important;
+}
+
+.img-container img {
+    width: 187px;
+    height: 117px;
+}
+
+
+@media (max-width: 1439px) {
+    section.content .creation-contrat .onglets .r-tabs-panel img {
+        max-width: 100%;
+        margin-left: 32px;
+        margin-top: 10px;
+    }
+}

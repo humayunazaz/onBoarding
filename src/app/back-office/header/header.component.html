@@ -1,0 +1,44 @@
+<header class="bo-header">
+  <div class="logo">
+    <a title=""><img src="assets/img/logo.svg" alt=""/></a>
+  </div>
+  <!-- /.logo -->
+  <div class="menu hidden-xs hidden-sm hidden-md">
+    <div>
+      <a class="lien" routerLink="/bo/users"><i class="glyphicon glyphicon-user"></i><p>Utilisateurs</p></a>
+    </div>
+    <div>
+      <a class="lien" routerLink="/bo/list-packs"><i class="glyphicon glyphicon-camera"></i><p>Photos</p></a>
+    </div>
+    <div>
+      <a class="lien" routerLink="/bo/import"><i class="glyphicon glyphicon-download"></i><p>Import</p></a>
+    </div>
+  </div>
+  <!-- /.menu -->
+  <div class="profil">
+    <div class="user">
+      <div class="col-xs-6">
+        <a title="Menu" class="hidden-lg burger" (click)="openMenu()">
+          <i id="menu-hamburger" class="glyphicon glyphicon-menu-hamburger"></i>
+        </a>
+      </div>
+      <div class="col-xs-6 user-content">
+        <i class="icon-user"></i>
+        <div class="name">
+          <p class="nom"></p>
+          <a title="" (click)="logout()" class="lien-vert lightbox-deleguer hidden-xs hidden-sm">Déconnecter</a>
+        </div>
+      </div>
+    </div>
+    <!-- /.user -->
+  </div>
+  <div class="menu-mobile hidden-lg">
+    <ul>
+      <li><a routerLink="/bo/users" title="" class="active">> Utilisateurs</a></li>
+      <li><a routerLink="/bo/import" title="">> Import</a></li>
+      <li><a routerLink="/bo/list-packs">> Photos</a></li>
+      <li (click)="logout()"><a title="">> Déconnexion</a></li>
+    </ul>
+  </div>
+</header>
+<router-outlet></router-outlet>

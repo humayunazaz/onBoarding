@@ -1,0 +1,692 @@
+.verification {
+    background-color: #eff2f6;
+    padding-right: 0px;
+    margin-right: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.last-tab-text {
+    margin-top: 45px;
+}
+
+.btn-bg {
+    background: #1ba20a;
+    color: #fff;
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 61px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-right: 0px;
+    height: 61px;
+    margin-bottom: 10px;
+}
+
+.verification-values {
+    padding-bottom: 10px;
+    margin-left: 5px;
+    padding-right: 15px;
+}
+
+.steps-container {
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 30px;
+}
+
+.steps-component .form-group {
+    margin: 0px;
+}
+
+.steps-component label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.steps-component input {
+    margin: 8px 0;
+    display: inline-block;
+    position: relative;
+    line-height: 40px;
+    height: 40px;
+    border: 0 none;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 22px;
+    border-radius: 20px;
+    background-color: #eff2f6;
+}
+
+.steps-component .error_input {
+    margin: 8px 0;
+    display: inline-block;
+    position: relative;
+    line-height: 40px;
+    height: 40px;
+    border: 0 none;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 22px;
+    border-radius: 20px;
+    background-color: red;
+}
+
+.steps-component input[type=checkbox]{
+    height: auto;
+
+}
+.lightbox-container input[type=email] {
+    width: 100%;
+    display: inline-block;
+    line-height: 40px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 18px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: 0 none;
+    background-color: #eff2f6;
+    font-weight: 400;
+    margin-bottom: 11px;
+}
+
+.steps-component select {
+    margin: 8px 0;
+    display: inline-block;
+    position: relative;
+    line-height: 40px;
+    height: 40px;
+    border: 0 none;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 22px;
+    border-radius: 20px;
+    background-color: #eff2f6;
+}
+
+.steps-component textarea {
+    height: 138px;
+    background-color: #eff2f6;
+    border-radius: 20px;
+    padding: 18px 28px;
+    font-size: 14px;
+    margin-bottom: 32px;
+    font-weight: 400;
+    line-height: 15px;
+    color: #000;
+    width: 100%;
+    border: 0 none;
+}
+
+.steps-component .text-area {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 25px;
+}
+
+.top-margin {
+    margin-top: 50px;
+}
+
+.last-tab-responsive {
+    display: inline-block;
+    height: 100px;
+    background: #343767;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+.submit-button {
+    background: transparent;
+    border: none;
+}
+
+.steps-component .form-check-input {
+    display: table-cell;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.steps-component .form-check-label {
+    margin:0px;
+    font-weight: normal;
+}
+
+.valid {
+    color: green;
+}
+
+.error-color {
+    color: red;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+
+    .ui-dialog {
+        left: 20%;
+    }
+
+    /*header .logo {*/
+        /*width: 10%;*/
+        /*float: left;*/
+        /*display: inline-block;*/
+    /*}*/
+
+    /*header .menu > div > a {*/
+        /*left: 15px;*/
+        /*position: absolute;*/
+        /*right: 30px;*/
+        /*top: 50%;*/
+        /*min-width: 260px;*/
+        /*-webkit-transform: translateY(-50%);*/
+        /*transform: translateY(-50%);*/
+    /*}*/
+
+    .steps-component {
+        padding-left: 54px;
+        position: relative;
+        padding-top: 34px;
+        padding-bottom: 31px;
+    }
+
+    .steps-component .section {
+        border-bottom-width: 2px;
+        border-bottom-color: #edeff1;
+        border-style: solid;
+        margin-right: 50px;
+        padding-bottom: 20px;
+        padding-top: 15px;
+    }
+
+    /*header .logo img {*/
+        /*width: 80%;*/
+    /*}*/
+
+    /*header .menu {*/
+        /*float: left;*/
+        /*display: inline-block;*/
+        /*width: 75%;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-nav .r-tabs-tab a {*/
+        /*width: 100%;*/
+        /*display: inline-block;*/
+        /*max-width: none;*/
+        /*height: 100%;*/
+    /*}*/
+
+    /*section.content table tr td:last-child {*/
+        /*border-right: 1px solid #e6ecf3;*/
+    /*}*/
+
+    /*section.content table tr td:first-child {*/
+        /*border-left: 1px solid #e6ecf3;*/
+    /*}*/
+
+    /*header .profil {*/
+        /*float: right;*/
+        /*width: 15%;*/
+        /*display: inline-block;*/
+        /*background: #343767;*/
+        /*height: 90px;*/
+        /*background-color: #1d2f39;*/
+        /*background-image: linear-gradient(to right, #16162c 0%, #242645 100%);*/
+    /*}*/
+
+    /*header .profil .user .user-content {*/
+        /*height: 86px;*/
+        /*!* float: right; *!*/
+        /*display: inline-block;*/
+        /*padding-left: 40px;*/
+        /*padding-right: 29px;*/
+        /*position: relative;*/
+        /*padding-top: 11px;*/
+    /*}*/
+
+    /*header .profil .user .nom {*/
+        /*font-size: 15px;*/
+        /*line-height: 15px;*/
+    /*}*/
+
+    .contract-form-component .tab {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 14%;
+        background: white;
+        padding-left: 15px;
+        color: black;
+    }
+
+    .contract-form-component .tab-current {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 14%;
+        background: #343767;
+        color: white;
+    }
+
+    .contract-form-component .last-tab {
+        display: inline-block;
+        float: right;
+        height: 100px;
+        background: #343767;
+        width: 16%;
+        color: white;
+        text-align: center;
+
+    }
+
+    .contract-form-component .last-tab-text {
+        margin-top: 45px;
+    }
+
+    .contract-form-component .tab:hover {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .contract-form-component .tab .row {
+        margin: 0px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .contract-form-component .tab .icon-check {
+        color: grey;
+    }
+
+}
+
+@media (max-width: 479px) {
+
+    .ui-dialog {
+        left: 0%;
+        margin:20px;
+        height: 550px;
+    }
+
+    .submit-button {
+        font-size: 10px;
+    }
+
+    /*body:not(.sidentifier) .header .logo {*/
+        /*width: 50%;*/
+    /*}*/
+
+    /*body:not(.sidentifier) .header .logo img {*/
+        /*width: 60%;*/
+        /*left: 56px;*/
+    /*}*/
+
+    /*body:not(.sidentifier) .header .logo .burger {*/
+        /*width: 23px;*/
+        /*margin-left: 19px;*/
+        /*margin-top: 35px;*/
+    /*}*/
+
+    /*body:not(.sidentifier) .header .logo .burger.open {*/
+        /*width: 15px;*/
+        /*margin-left: 25px;*/
+        /*margin-top: 36px;*/
+    /*}*/
+
+    /*body:not(.sidentifier) .header .profil {*/
+        /*width: 50%;*/
+    /*}*/
+
+    /*img {*/
+        /*max-width: 100%;*/
+    /*}*/
+
+    /*body:not(.sidentifier) .header .logo .burger {*/
+        /*background: url(/assets/img/burger.svg) no-repeat 0 0 transparent;*/
+        /*width: 29px;*/
+        /*height: 21px;*/
+        /*background-size: 100% 100%;*/
+        /*display: inline-block;*/
+        /*float: left;*/
+        /*margin-left: 27px;*/
+        /*margin-top: 32px;*/
+    /*}*/
+
+    .contract-form-component .tab {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 33%;
+        background: white;
+        padding-left: 15px;
+        color: black;
+    }
+
+    .contract-form-component .tab-current {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 33%;
+        background: #343767;
+        color: white;
+    }
+
+    .contract-form-component .last-tab {
+        display: inline-block;
+        float: right;
+        height: 100px;
+        background: #343767;
+        width: 33%;
+        color: white;
+        text-align: center;
+
+    }
+
+    .contract-form-component .last-tab-text {
+        margin-top: 45px;
+    }
+
+    .contract-form-component .tab:hover {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .contract-form-component .tab .row {
+        margin: 0px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .contract-form-component .tab .icon-check {
+        color: grey;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .ui-dialog {
+        left: 30%
+    }
+
+    .contract-form-component .tab {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 14%;
+        background: white;
+        padding-left: 15px;
+        color: black;
+    }
+
+    .contract-form-component .tab-current {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 14%;
+        background: #343767;
+        color: white;
+    }
+
+    .contract-form-component .last-tab {
+        display: inline-block;
+        float: right;
+        height: 100px;
+        background: #343767;
+        width: 16%;
+        color: white;
+        text-align: center;
+
+    }
+
+    .contract-form-component .last-tab-text {
+        margin-top: 45px;
+    }
+
+    .contract-form-component .tab:hover {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .contract-form-component .tab .row {
+        margin: 0px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .contract-form-component .tab .icon-check {
+        color: grey;
+    }
+
+    .steps-component {
+        padding-left: 54px;
+        position: relative;
+        padding-top: 34px;
+        padding-bottom: 31px;
+    }
+
+    .steps-component .section {
+        border-bottom-width: 2px;
+        border-bottom-color: #edeff1;
+        border-style: solid;
+        margin-right: 50px;
+        padding-bottom: 20px;
+        padding-top: 15px;
+    }
+
+    /*header .logo {*/
+        /*width: 10%;*/
+        /*float: left;*/
+        /*display: inline-block;*/
+    /*}*/
+
+    /*header .menu {*/
+        /*width: 50%;*/
+    /*}*/
+
+    /*header .profil {*/
+        /*width: 30%;*/
+    /*}*/
+
+    /*section.content .titre-page {*/
+        /*font-size: 35px;*/
+    /*}*/
+
+    /*section.content .titre-secondaire {*/
+        /*font-size: 23px;*/
+        /*padding-left: 63px;*/
+    /*}*/
+
+    /*section.content .titre-secondaire i {*/
+        /*width: 48px;*/
+        /*height: 48px;*/
+    /*}*/
+
+    /*section.content .creation-contrat {*/
+        /*display: inline-block;*/
+        /*width: 100%;*/
+    /*}*/
+
+    /*section.content .creation-contrat .recapitulatif {*/
+        /*width: 200px;*/
+        /*float: left;*/
+    /*}*/
+
+    /*section.content .creation-contrat .recapitulatif .asterisques {*/
+        /*padding-left: 0;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets {*/
+        /*float: left;*/
+        /*display: inline-block;*/
+        /*width: calc(100% - 200px);*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets.no-tabs {*/
+        /*width: 100%;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-nav {*/
+        /*height: 100%;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-nav li {*/
+        /*width: auto;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .radio-container {*/
+        /*width: 439px;*/
+        /*clear: none;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .radio-container .iradio {*/
+        /*clear: none;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .radio-container label[for=fr] {*/
+        /*margin-right: 148px;*/
+        /*clear: none;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .radio-container.allwidth {*/
+        /*width: 100%;*/
+        /*margin-top: 0;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .radio-container > .divers-container {*/
+        /*width: 33.33%;*/
+        /*float: left;*/
+        /*display: inline-block;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .radio-container > .divers-container .img-container {*/
+        /*clear: both;*/
+        /*display: inline-block;*/
+        /*float: left;*/
+        /*margin-top: 20px;*/
+        /*position: relative;*/
+    /*}*/
+
+    /*section.content .creation-contrat .onglets .r-tabs-panel .col-xs-12:not(.col-lg-6) .select-container {*/
+        /*width: calc(100% - 140px - 439px - 33px);*/
+        /*float: left;*/
+        /*margin-left: 0;*/
+        /*clear: none;*/
+    /*}*/
+}
+
+@media (min-width: 768px) {
+    /*header .menu {*/
+        /*height: 90px;*/
+    /*}*/
+
+    /*header .menu > div {*/
+        /*height: 100%;*/
+        /*width: 50%;*/
+    /*}*/
+
+    section.content .creation-contrat .onglets .r-tabs-accordion-title {
+        display: none;
+    }
+
+    section.content .creation-contrat .onglets .r-tabs-nav {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+    }
+
+    section.content .creation-contrat .onglets .r-tabs-nav li {
+        width: 33.33%;
+    }
+
+    .steps-component {
+        position: relative;
+        padding-top: 34px;
+        padding-bottom: 31px;
+    }
+
+    .steps-component .section {
+        border-bottom-width: 2px;
+        border-bottom-color: #edeff1;
+        border-style: solid;
+        padding-bottom: 20px;
+        padding-top: 15px;
+    }
+
+    .contract-form-component .tab {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 14%;
+        background: white;
+        padding-left: 15px;
+        color: black;
+    }
+
+    .contract-form-component .tab-current {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 14%;
+        background: #343767;
+        color: white;
+    }
+
+    .contract-form-component .last-tab {
+        display: inline-block;
+        float: right;
+        height: 100px;
+        background: #343767;
+        width: 16%;
+        color: white;
+        text-align: center;
+
+    }
+
+    .contract-form-component .last-tab-text {
+        margin-top: 45px;
+    }
+
+    .contract-form-component .tab:hover {
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+        -moz-box-shadow: 3px 3px 5px 6px #ccc; /* Firefox 3.5 - 3.6 */
+        box-shadow: 3px 3px 5px 6px #ccc;
+    }
+
+    .contract-form-component .tab .row {
+        margin: 0px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    .contract-form-component .tab .icon-check {
+        color: grey;
+    }
+
+}
+
+.small {
+    max-width: 100px;
+}
+
+.informations {
+    position: relative;
+    color: #707070;
+    font-size: 13px;
+    font-weight: 400;
+    padding-left: 25px;
+    line-height: 16px;
+    margin-bottom: 10px;
+    margin-top: 13px;
+}
+
+.informations i {
+    color: #f00;
+    font-size: 13px;
+    left: 0;
+    top: 0;
+    position: absolute;
+}

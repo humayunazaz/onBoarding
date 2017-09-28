@@ -1,0 +1,1488 @@
+@import _variables
+
+body
+    font-family: Lato
+    color: #000
+    font-size: 15px
+    background-color: #e6ecf3
+    font-weight: 400
+
+.lien-blanc
+    height: 42px
+    line-height: 49px
+    background-color: #fff
+    color: $bleu_fonce
+    letter-spacing: 0.15em
+    font-size: 13px
+    display: inline-block
+    border-radius: 20px
+    font-weight: 700
+    text-transform: uppercase
+    padding: 0 30px
+    position: relative
+    i
+        position: relative
+        transform: translateY(3px)
+        margin-right: 5px
+        font-size: 24px
+        display: inline-block
+    &:hover
+        color: $bleu_fonce
+        text-decoration: none
+    
+.lien-noir
+    font-size: 13px
+    font-weight: 400
+    line-height: 25px
+    color: #313238
+    display: inline-block
+    height: 29px
+    border-radius: 20px
+    padding: 0 15px
+    border: 2px solid #4b4b4b
+    i
+        font-size: 13px
+        margin-right: 6px
+    &:hover
+        color: #313238
+        text-decoration: none
+.lien
+    color: $blanc
+    letter-spacing: 0.15em
+    font-size: 13px
+    font-weight: 700
+    display: inline-block
+    position: relative
+    line-height: 20px
+    text-transform: uppercase
+    i
+        position: relative
+        margin-right: 5px
+        transform: translateY(3px)
+        font-size: 24px
+        display: inline-block
+    &:hover
+        color: $blanc
+        text-decoration: none
+    &.active
+        position: relative
+        &:after
+            content: ""
+            position: absolute
+            height: 2px
+            width: auto
+            background: #fff
+            left: 90px
+            right: 50px
+            bottom: -2px
+            
+        
+.lien-vert
+    color: $vert
+    font-size: 13px
+    font-weight: 400
+    text-decoration: underline
+    &:hover
+        text-decoration: none
+        color: $vert
+        
+.btn-vert
+    background: $vert
+    color: $blanc
+    font-size: 23px
+    font-weight: 400
+    line-height: 61px
+    text-transform: uppercase
+    text-align: center
+    width: 100%
+    display: inline-block
+    height: 61px
+    i
+        margin-right: 10px
+    &:hover
+        color: $blanc
+        text-decoration: none
+
+.btn-vert-plein
+    height: 29px
+    background-color: #40d617
+    color: #fff
+    font-size: 11px
+    font-weight: 700
+    line-height: 29px
+    border-radius: 20px
+    min-width: 113px
+    text-align: center
+    text-transform: uppercase
+    padding: 0 15px
+    display: inline-block
+    i        
+        margin-left: 8px
+        display: inline-block
+        transform: translateY(2px)
+        font-size: 18px
+        &.icon-check-mark
+            font-size: 8px
+            transform: translateY(-1px)
+    &:hover
+        text-decoration: none
+        color: #fff
+    &.widthauto
+        min-width: auto
+        i
+            margin-left: 0
+            &.icon-check-mark
+            font-size: 16px
+            transform: translateY(3px)
+.btn-bleu-plein
+    height: 29px
+    background-color: #20223f
+    color: #fff
+    min-width: 113px
+    text-align: center
+    font-size: 11px
+    font-weight: 700
+    line-height: 29px
+    display: inline-block
+    border-radius: 20px
+    padding: 0 15px
+    text-transform: uppercase
+    i
+        display: inline-block
+        margin-left: 8px
+        transform: translateY(2px)
+        font-size: 14px
+    &:hover
+        text-decoration: none
+        color: #fff
+    &.widthauto
+        min-width: auto
+        i
+            margin-left: 0
+.btn-rouge-plein
+    height: 29px
+    background-color: $rouge
+    color: #fff
+    min-width: 113px
+    text-align: center
+    font-size: 11px
+    font-weight: 700
+    line-height: 29px
+    display: inline-block
+    border-radius: 20px
+    padding: 0 15px
+    text-transform: uppercase
+    i
+        display: inline-block
+        margin-left: 8px
+        transform: translateY(2px)
+        font-size: 14px
+    &:hover
+        text-decoration: none
+        color: #fff
+    &.widthauto
+        min-width: auto
+        i
+            margin-left: 0
+    
+.btn-gris-border
+    height: 29px
+    border: 2px solid #4b4b4b
+    color: #20223f
+    text-align: center
+    line-height: 25px
+    display: inline-block
+    border-radius: 20px
+    padding: 0 10px
+    font-size: 14px
+    font-weight: 400
+    i
+        display: inline-block
+        font-size: 14px
+        &.icon-arrow
+            margin-right: 10px
+    &:hover
+        text-decoration: none
+        color: #20223f
+    
+.btn-vert-border
+    height: 29px
+    border: 2px solid #40d618
+    color: #313238
+    text-align: center
+    font-size: 13px
+    font-weight: 400
+    line-height: 29px
+    display: inline-block
+    border-radius: 20px
+    padding: 0 10px
+    min-width: 166px
+    i
+        display: inline-block
+        font-size: 21px
+        transform: translateY(2px)
+        float: left
+        margin-left: 0
+        color: #40d618
+    &:hover
+        text-decoration: none
+        color: #313238
+    
+.h2
+    color: $noir
+    font-size: 22px
+    font-weight: 700
+    line-height: 17px
+    padding-bottom: 32px
+    padding-top: 16px
+header
+    .logo
+        background: $rouge
+        float: left
+        width: 100%
+        display: inline-block
+        text-align: center
+        height: 90px
+        position: relative
+        img
+            position: absolute
+            top: 50%
+            margin: 0 auto
+            left: 0
+            right: 0
+            transform: translateY(-50%)
+            max-height: 50px
+            max-width: 196px
+            display: inline-block
+    .menu
+        float: left
+        width: 100%
+        display: inline-block
+        background: $bleu
+        height: 105px
+        > div
+            float: left
+            display: inline-block
+            width: 100%
+            height: 50%
+            position: relative
+            text-align: center
+            background-color: #1d2f39
+            background-image: -webkit-linear-gradient(left, #16162c 0%, #242645 100%)
+            background-image: -o-linear-gradient(left, #16162c 0%, #242645 100%)
+            background-image: linear-gradient(to right, #16162c 0%, #242645 100%)
+            > a
+                left: 30px
+                position: absolute
+                right: 30px
+                top: 50%
+                min-width: 260px
+                transform: translateY(-50%)
+                
+    .profil
+        float: left
+        width: 100%
+        display: inline-block
+        background: $bleu
+        height: 90px
+        background-color: #1d2f39
+        background-image: -webkit-linear-gradient(left, #16162c 0%, #242645 100%)
+        background-image: -o-linear-gradient(left, #16162c 0%, #242645 100%)
+        background-image: linear-gradient(to right, #16162c 0%, #242645 100%)
+        .user
+            color: $blanc
+            font-weight: 400
+            float: left
+            width: calc(100% - 142px)
+            display: inline-block
+            position: relative
+            .user-content
+                height: 86px
+                float: right
+                display: inline-block
+                padding-left: 40px
+                padding-right: 29px
+                position: relative
+                padding-top: 11px
+                
+            i
+                position: absolute
+                top: 50%
+                transform: translateY(-50%)
+                color: $violet
+                font-size: 31px
+                float: left
+                display: inline-block
+                left: 0
+            .nom
+                font-size: 20px
+                line-height: 25px
+            .fonction
+                color: $violet
+                padding-bottom: 7px
+                font-size: 15px
+        .deco
+            background: $blanc
+            float: right
+            height: 100%
+            width: 142px
+            position: relative
+            text-align: center
+            a
+                width: 100%
+                position: absolute
+                display: inline-block
+                top: 50%
+                transform: translateY(-50%)
+                left: 0
+                font-size: 13px
+                font-weight: 600
+                color: $noir
+                i
+                    color: #7b7e7f
+                    font-size: 18px
+                    display: inline-block
+                    transform: translateY(2px)
+    &.recrute
+        .profil
+            background-color: #1d2f39
+            background-image: -webkit-linear-gradient(left, #2d2f59 0%, #353868 100%)
+            background-image: -o-linear-gradient(left, #2d2f59 0%, #353868 100%)
+            background-image: linear-gradient(to right, #2d2f59 0%, #353868 100%)
+            .nom
+                line-height: 60px
+        .menu > div
+            background-color: #1d2f39
+            background-image: -webkit-linear-gradient(left, #2d2f59 0%, #353868 100%)
+            background-image: -o-linear-gradient(left, #2d2f59 0%, #353868 100%)
+            background-image: linear-gradient(to right, #2d2f59 0%, #353868 100%)
+            .lien-blanc
+                background: transparent
+                color: #fff
+            
+    &.coach
+        .profil .user .user-content
+            padding-top: 20px
+                    
+section.content
+    padding-bottom: 100px
+    .titre-page
+        font-size: 20px
+        font-weight: 400
+        line-height: 48px
+        color: #313238
+        padding-left: 0
+        margin-top: 33px
+
+    .titre-secondaire
+        font-size: 15px
+        font-weight: 400
+        line-height: 37px
+        color: $bleu
+        line-height: 49px
+        float: right
+        display: inline-block
+        position: relative
+        padding-left: 45px
+        margin-top: 33px
+        margin-bottom: 32px
+        i
+            position: absolute
+            width: 30px
+            height: 30px
+            display: inline-block
+            top: 50%
+            left: 0
+            transform: translateY(-50%)
+    .select-container
+        width: calc(100% - 143px - 33px)
+        margin: 8px 0
+        display: inline-block
+        position: relative
+        margin-left: 143px
+        float: left
+        select
+            width: 100%
+            display: inline-block
+            line-height: 40px
+            height: 40px
+            font-size: 15px
+            padding: 0 22px
+            cursor: pointer
+            border-radius: 20px
+            border: 0 none
+            background-color: #eff2f6
+            appearance : none
+            -moz-appearance : none
+            -webkit-appearance : none
+            font-weight: 400
+        i
+            position: absolute
+            right: 18px
+            top: 50%
+            transform: translateY(-50%)
+            font-size: 7px
+    .recap-contrats
+        padding-top: 65px
+        i.icon-contrat
+            color: $noir
+            font-size: 60px
+            float: left
+            margin-left: 36px
+            display: inline-block
+            margin-right: 18px
+        p
+            float: left
+            display: inline-block
+            font-size: 18px
+            font-weight: 400
+            color: #313238
+            margin-right: 40px
+            line-height: 56px
+            span
+                color: #fff
+                border-radius: 50%
+                background-color: #a2d9d6
+                height: 34px
+                width: 34px
+                display: inline-block
+                line-height: 34px
+                margin-right: 5px
+                text-align: center
+            &.asigner
+                span
+                    background-color: #06af95
+    .creation-contrat
+        background: $blanc
+        .onglets
+            width: 100%
+            display: inline-block
+            .checkbox-degrade
+                width: 93px
+                height: 93px
+                margin-left: 4px
+                margin-top: 16px
+                display: inline-block
+            .btn-vert
+                max-width: 713px
+                font-size: 23px
+                margin-top: 70px
+            .lien-noir
+                position: absolute
+                right: 0
+                top: 50%
+                transform: translateY(-50%)
+            .r-tabs-accordion-title, .r-tabs-nav
+                width: 100%
+                display: inline-block
+                height: 100px
+                color: #313238
+                font-size: 15px
+                font-weight: 400
+                text-transform: uppercase
+                position: relative
+                a
+                    padding-left: 34px
+                    padding-top: 15px
+                    color: #313238
+                    max-width: 170px
+                    display: inline-block
+                    i
+                        font-size: 24px
+                        color: $gris_moyen
+                        margin-bottom: 11px
+                        display: inline-block
+            .r-tabs-accordion-title
+                border-bottom: 1px solid $gris_moyen
+                a
+                    max-width: 100%
+                    width: 100%
+                    height: 100%
+                &.r-tabs-state-active
+                    border-bottom: 0 none
+                    background: $bleu
+                    a
+                        color: $blanc                    
+                        border-right: 1px solid $bleu
+                        i
+                            color: $blanc
+            .r-tabs-nav
+                display: none
+                .r-tabs-tab
+                    display: inline-block
+                    float: left
+                    height: 100px
+                    &.vert a
+                        color: $vert
+                        i
+                            color: $vert
+                    a
+                        padding-left: 20px
+                        padding-right: 10px
+                        border-right: 1px solid #f4f4f4
+                        &:hover
+                        text-decoration: none
+                    &.r-tabs-state-active
+                        background: $bleu
+                        a
+                            color: $blanc                    
+                            border-right: 1px solid $bleu
+                            i
+                                color: $blanc
+            .r-tabs-panel
+                padding-left: 54px
+                position: relative
+                padding-right: 40px
+                padding-top: 34px
+                padding-bottom: 31px
+                hr.separateur
+                    margin: 30px 0 17px
+                    background: #edeff1
+                    height: 1px
+                    border: 0 none
+                    
+                label
+                    position: absolute
+                    top: 50%
+                    transform: translateY(-50%)
+                    color: $noir
+                    font-size: 15px
+                    font-weight: 700
+                    width: 140px
+                    line-height: 17px
+                    left: 15px
+                    padding-right: 10px
+                    &.nocenter
+                        top: 15px
+                        transform: translateY(0)
+                input[type="text"], input[type="mail"], input[type="phone"]
+                    width: calc(100% - 143px - 33px)
+                    margin: 8px 0
+                    margin-left: 143px
+                    display: inline-block
+                    position: relative
+                    line-height: 40px
+                    height: 40px
+                    border: 0 none
+                    font-size: 15px
+                    font-weight: 400
+                    padding: 0 22px
+                    border-radius: 20px
+                    background-color: #eff2f6
+                    &.error
+                        background: $rouge
+                        color: $blanc
+                    &.small
+                        max-width: 100px
+                    &.smaller
+                        max-width: 90px
+                    &.xsmall
+                        max-width: 60px
+                    &.medium
+                        max-width: 150px
+                    + input[type="text"]
+                        margin-left: 10px
+                .radio-container
+                    width: calc(100% - 143px)
+                    margin: 8px 0
+                    margin-left: 143px
+                    display: inline-block
+                    position: relative
+                    font-size: 15px
+                    font-weight: 400
+                    float: left
+                    line-height: 40px
+                    height: 40px
+                    .iradio
+                        float: left
+                        display: inline-block
+                        transform: translateY(10px)
+                    label
+                        float: left
+                        position: relative
+                        top: 11px
+                        cursor: pointer
+                        line-height: 27px
+                        transform: translate(0)
+                        width: auto
+                        padding-left: 20px
+                        padding-right: 34px
+                        left: 0
+                        font-weight: 400
+                    
+                .checkbox-container
+                    float: left
+                    margin-left: 143px
+                    display: inline-block
+                    position: relative
+                    .icheckbox
+                        position: relative
+                        display: inline-block
+                        transform: translateY(6px)
+                    label
+                        left: 0
+                        position: relative
+                        top: 0
+                        cursor: pointer
+                        padding-left: 15px
+                        transform: translate(0px)
+                        width: auto
+                        line-height: 18px
+                        font-weight: 400
+                    &.nolabel
+                        margin-left: 0
+                        width: 100%
+                    &.uneproposition
+                        .icheckbox
+                            float: left
+                        label
+                            float: left
+                            display: inline-block
+                            width: calc(100% - 24px)
+                            padding-top: 7px
+            
+                .espace
+                    height: 12px
+                    width: 100%
+                    display: inline-block
+                .select-container
+                    width: calc(100% - 143px - 33px)
+                    margin: 8px 0
+                    display: inline-block
+                    position: relative
+                    margin-left: 143px
+                    float: left
+                    select
+                        width: 100%
+                        display: inline-block
+                        line-height: 40px
+                        height: 40px
+                        font-size: 15px
+                        padding: 0 22px
+                        cursor: pointer
+                        border-radius: 20px
+                        border: 0 none
+                        background-color: #eff2f6
+                        appearance : none
+                        -moz-appearance : none
+                        -webkit-appearance : none
+                        font-weight: 400
+                    i
+                        position: absolute
+                        right: 18px
+                        top: 50%
+                        transform: translateY(-50%)
+                        font-size: 7px
+                .col-xs-12:not(.col-lg-6)
+                    .radio-container
+                        height: auto
+                        .iradio
+                            clear: both
+                            margin-bottom: 10px
+                    .select-container
+                        margin-left: 140px
+                        clear: both
+                p
+                    color: $noir
+                    font-size: 14px
+                    font-weight: 400
+                    line-height: 15px
+                    width: calc(100% - 143px - 33px)
+                    margin: 8px 0
+                    display: inline-block
+                    position: relative
+                    margin-left: 143px
+                    float: left
+                    padding-left: 22px
+                    b
+                        font-weight: 700
+                    &.texte
+                        width: 100%
+                        padding-left: 0
+                        margin-left: 0
+                    &.size15
+                        font-size: 15px
+                        line-height: 17px
+                    &.instructions
+                        font-size: 14px
+                        font-weight: 400
+                        line-height: 15px
+                        margin-left: 0
+                        width: 100%
+                        padding: 0 11px
+                        margin-top: 25px
+                    &.t-right
+                        text-align: right
+                    &.confirmation
+                        font-size: 15px
+                        font-weight: 400
+                        margin-left: 0
+                        width: 100%
+                        line-height: 17px
+                        span
+                            padding-left: 37px
+                            display: inline-block
+                            width: 100%
+                        .lien-noir
+                            position: relative
+                            left: 0
+                textarea
+                    height: 138px
+                    background-color: #eff2f6
+                    border-radius: 20px
+                    padding: 18px 28px
+                    font-size: 14px
+                    margin-bottom: 32px
+                    font-weight: 400
+                    line-height: 15px
+                    color: $noir
+                    width: 100%
+                    border: 0 none
+                img
+                    max-width: 100%
+                .col-xs-12 > div.divers-container
+                    position: relative
+                    display: inline-block
+                    min-height: 40px
+                    width: 100%
+                    label
+                        left: 0
+                        display: inline-block
+                    p
+                        float: left
+                        display: inline-block
+                        width: auto
+                        padding-left: 0
+                        + input
+                            margin-left: 60px
+                            float: left
+                            display: inline-block
+            #adresse, #bancaire, #fiche
+                padding-bottom: 111px
+                padding-top: 73px
+            #decharge
+                padding-bottom: 70px
+            .r-tabs-panel .informations
+                position: relative
+                color: #707070
+                font-size: 13px
+                font-weight: 400
+                padding-left: 25px
+                line-height: 16px
+                margin-bottom: 10px;
+                margin-top: 13px;
+                i
+                    color: #f00
+                    font-size: 13px
+                    left: 0
+                    top: 0
+                    position: absolute
+        .recapitulatif
+            width: 100%
+            display: none
+            &.recapitulatif-1
+                display: inline-block
+            .titre-recap
+                width: 100%
+                background-color: #171837
+                color: #fff
+                padding-left: 19px
+                font-size: 15px
+                font-weight: 400
+                line-height: 17px
+                text-transform: uppercase
+                display: inline-block
+                min-height: 98px
+                position: relative
+                span
+                    position: absolute
+                    top: 50%
+                    transform: translateY(-50%)
+                    display: inline-block
+                    padding-right: 30px
+            .liste-recap
+                padding-left: 16px
+                display: inline-block
+                width: 100%
+                padding-top: 14px
+                padding-bottom: 38px
+                background-color: #eff2f6
+                li
+                    font-size: 15px
+                    color: #171837
+                    font-weight: 400
+                    line-height: 17px
+                    padding-left: 19px
+                    padding-right: 10px
+                    position: relative
+                    i
+                        position: absolute
+                        left: 0
+                        top: 3px
+                        opacity: 0.13
+                        width: 19px
+                        display: inline-block
+                        font-size: 11px
+                    &.valid
+                        color: $vert
+                        i
+                            opacity: 1
+                    &.error
+                        color: $rouge
+                        i
+                            opacity: 1
+                    span
+                        clear: both
+                        padding-bottom: 11px
+                        padding-left: 11px
+                        padding-top: 6px
+                        font-size: 13px
+                        display: inline-block
+            .asterisques
+                font-size: 15px
+                font-weight: 400
+                color: $noir
+                line-height: 39px
+                padding-left: 19px
+                
+    .contrat
+        background: $blanc
+        padding: 32px
+        margin-top: 40px
+        width: 100%
+        display: inline-block
+        .filtre
+            padding-bottom: 32px
+            display: inline-block
+            width: 100%
+            label
+                float: left
+                line-height: 40px
+            .select-container
+                max-width: 180px
+                margin: 0 0 0 18px
+                float: left
+        .recherche-container
+            position: relative
+            display: inline-block
+            width: 100%
+            input
+                width: 100%
+                display: inline-block
+                line-height: 40px
+                height: 40px
+                font-size: 15px
+                padding: 0 22px
+                border-radius: 20px
+                padding-right: 40px
+                border: 0 none
+                background-color: #eff2f6
+                appearance : none
+                -moz-appearance : none
+                -webkit-appearance : none
+                font-weight: 400
+            button
+                position: absolute
+                top: 50%
+                transform: translateY(-50%)
+                right: 0
+                border: 0 none
+                background: transparent
+                font-size: 16px
+                color: $noir
+                padding: 0 18px
+                text-align: center
+    table
+        width: 100%
+        tr
+            border-left: 1px solid #fff
+            border-right: 1px solid #fff
+            th
+                background: #e6ecf3
+                color: #313238
+                font-size: 14px
+                font-weight: 700
+                height: 60px
+                text-align: left
+                line-height: 60px
+                text-transform: uppercase
+                padding: 0 0 0 16px
+                a
+                    font-size: 14px
+                    margin-left: 13px
+                    color: #c2c8cf
+                    line-height: 62px
+                    &:hover
+                        text-decoration: none
+                span
+                    font-size: 12px
+                    line-height: 14px
+                    display: inline-block
+                    vertical-align: middle
+                    
+                    &.tooltip
+                        cursor: pointer
+                        &:hover
+                            text-decoration: underline
+            td
+                padding: 0 17px
+                height: 55px
+                color: #313238
+                vertical-align: middle
+                font-size: 14px
+                font-weight: 400
+                line-height: 16px
+                min-width: 129px
+                border: 1px solid #e6ecf3
+                .rouge
+                    color: red
+                span:not(.bt-content)
+                    font-size: 11px
+                    font-weight: 400
+                    line-height: 12px
+                    max-width: 140px
+                    display: inline-block
+                &:first-child
+                    border-left: 0 none
+                &:last-child
+                    border-right: 0 none
+                &.boutons
+                    min-width: 253px
+                    a
+                        float: right
+                        margin-left: 5px
+                    span
+                        max-width: 100%
+                        text-align: right
+                        float: right
+            &.gris
+                td
+                    background-color: #f4f7fb
+            &.rose
+                td
+                    background-color: #ffe9e9
+            &.vert
+                td
+                    background-color: #ebffe5
+        &.ddzm
+            tr
+                td
+                    &.boutons
+                        min-width: 227px
+    &.mescontrats
+        .titre-page
+            line-height: 29px
+            padding-top: 41px
+        .contrat
+            margin-top: 19px
+            
+            
+    .pagination
+        
+        ul
+            padding-top: 43px
+            display: inline-block
+            width: 100%
+            text-align: center
+            li
+                display: inline
+                a, span
+                    display: inline-block
+                    color: #7b7e7f
+                    font-size: 15px
+                    font-weight: 700
+                    line-height: 15px
+                    padding: 0 2px
+                    &.active
+                        color: #000
+                    &.next, &.prev
+                        padding: 0 25px
+                        i
+                            display: inline-block
+                            font-size: 7px
+                            transform: translateY(-2px)
+                            margin: 0 8px
+                    &.prev
+                        i
+                            transform: translateY(-2px) rotate(180deg)
+                span
+                    color: #c5c5c5
+
+.tooltip-container
+    position: absolute
+    color: #fff
+    font-size: 12px
+    font-weight: 400
+    background-color: #191a33
+    border: 1px solid #dadada
+    padding: 10px
+    border-radius: 10px
+    max-width: 140px
+    line-height: 14px
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.18)
+    &:after
+        position: absolute
+        bottom: -9px
+        z-index: 1
+        content: "\e924"
+        font-size: 12px
+        color: #191a33
+        right: 15px
+        font-family: 'stanhome' !important
+        speak: none
+        font-style: normal
+        font-weight: normal
+        font-variant: normal
+        text-transform: none
+        line-height: 1
+        -webkit-font-smoothing: antialiased
+        -moz-osx-font-smoothing: grayscale
+        
+.sidentifier
+    background: url(../img/bg-sidentifier.jpg) no-repeat top right #171837
+    position: relative
+    display: inline-block
+    width: 100%
+    min-height: 500px
+    .content
+        position: absolute
+        top: 50%
+        width: 100%
+        padding: 0
+        transform: translateY(-50%)
+        .login-container
+            max-width: 364px
+            margin: 0 auto
+            .header
+                background: $rouge
+                text-align: center
+                height: 120px
+                display: block
+                width: 100%
+                position: relative
+                .logo
+                    position: absolute
+                    top: 50%
+                    left: 50%
+                    transform: translate(-50%,-50%)
+                    height: 50px
+                    width: 196px
+                    display: inline-block
+                    img
+                        width: 100%
+                        height: 100%
+            .bloc-blanc
+                background: #fff
+                padding: 27px
+                display: inline-block
+                width: 100%
+                text-align: center
+                padding-bottom: 66px
+                p.erreur
+                    color: #e02a2c
+                    font-size: 13px
+                    font-weight: 400
+                    line-height: 17px
+                    padding-left: 48px
+                    padding-right: 37px
+                    text-align: center
+                    padding-bottom: 27px
+                .champs-container
+                    position: relative
+                    display: inline-block
+                    width: 100%
+                    i
+                        border-radius: 50%
+                        border: 2px solid #988dd5
+                        width: 31px
+                        display: inline-block
+                        height: 31px
+                        font-size: 13px
+                        text-align: center
+                        line-height: 27px
+                        color: #988dd5
+                        float: left
+                        margin-top: 5px
+                    input
+                        float: left
+                        display: inline-block
+                        width: calc(100% - 47px)
+                        margin-left: 16px
+                        height: 40px
+                        background-color: #eff2f6
+                        border-radius: 20px
+                        color: #000
+                        font-size: 15px
+                        padding: 0 22px
+                        margin-bottom: 21px
+                        font-weight: 400
+                        border: 0 none
+                        line-height: 40px
+                button
+                    border: 0 none
+                    text-transform: uppercase
+                    background: $vert
+                    height: 61px
+                    line-height: 61px
+                    color: #fff
+                    font-size: 18px
+                    font-weight: 400
+                    padding: 0 20px
+                    position: absolute
+                    bottom: -21px
+                    min-width: 195px
+                    left: 50%
+                    transform: translateX(-50%)
+        .explication-login
+            padding-top: 35px
+            max-width: 370px
+            margin: 0 auto
+            i.icon-bulle
+                font-size: 56px
+                color: #fff
+                display: inline-block
+                margin-bottom: 38px
+            h1
+                font-weight: 400
+                line-height: 17px
+                color: #fff
+                font-size: 17px
+                margin-left: 6px
+            h2
+                font-weight: 400
+                line-height: 17px
+                color: #e02a2c
+                font-size: 16px
+                margin-left: 6px
+            ul
+                padding-top: 17px
+                margin-left: 6px
+                li
+                    padding-bottom: 17px
+                    padding-left: 30px
+                    font-weight: 400
+                    line-height: 17px
+                    color: #fff
+                    font-size: 13px
+                    position: relative
+                    &:before
+                        left: 0
+                        top: 4px
+                        position: absolute
+                        display: inline-block
+                        transform: rotate(-90deg)
+                        font-size: 10px
+                        content: "\e901"
+                        font-family: 'stanhome' !important
+                        speak: none
+                        font-style: normal
+                        font-weight: normal
+                        font-variant: normal
+                        text-transform: none
+                        line-height: 1
+                        -webkit-font-smoothing: antialiased
+                        -moz-osx-font-smoothing: grayscale
+                       
+.ui-widget-overlay
+    opacity: 0.7
+    background: $noir
+    width: 100%
+    height: 100%
+    position: fixed
+    left: 0
+    right: 0
+    top: 0
+    bottom: 0
+    z-index: 1
+.ui-dialog
+    background: #fff
+    z-index: 1
+    padding: 0px 46px
+    padding-bottom: 40px
+    padding-top: 78px
+    position: fixed
+    top: 50%
+    max-width: 100%
+    overflow-y: auto
+    max-height: calc(100% - 20px)
+    transform: translateY(-50%)
+    p
+        color: #000
+        font-size: 24px
+        font-weight: 700
+        line-height: 28px
+        padding-bottom: 30px
+        &.error
+            color: #f00
+            text-align: center
+            font-size: 16px
+            font-weight: 700
+            line-height: 17px
+            margin-top: 25px
+    .content
+        padding-bottom: 58px
+        label
+            font-size: 16px
+            font-weight: 700
+            line-height: 17px
+            color: #000
+            padding-top: 5px
+            display: inline-block
+            + span            
+                padding-top: 5px
+                display: inline-block
+                font-size: 13px
+                font-weight: 400
+                padding-bottom: 25px
+                line-height: 17px
+    .select-container, .datepicker-container
+        width: 100%
+        margin: 0
+        display: inline-block
+        position: relative
+        margin-bottom: 11px
+        select
+            width: 100%
+            display: inline-block
+            line-height: 40px
+            height: 40px
+            font-size: 14px
+            padding: 0 30px 0 11px
+            cursor: pointer
+            border-radius: 20px
+            border: 0 none
+            background-color: #eff2f6
+            appearance : none
+            -moz-appearance : none
+            -webkit-appearance : none
+            font-weight: 400
+        i
+            position: absolute
+            right: 15px
+            top: 50%
+            transform: translateY(-50%)
+            font-size: 7px
+    .datepicker-container
+        i
+            font-size: 19px
+            top: 10px
+            transform: translate(0px)
+    textarea
+        width: 100%
+        display: inline-block
+        height: 149px
+        font-size: 14px
+        padding: 20px
+        cursor: pointer
+        border-radius: 20px
+        border: 0 none
+        background-color: #eff2f6
+        margin-bottom: 11px
+    .text-center
+        text-align: center
+    input[type=submit]
+        margin-top: 8px
+    input[type=text],input[type=mail]
+        width: 100%
+        display: inline-block
+        line-height: 40px
+        height: 40px
+        font-size: 14px
+        padding: 0 18px
+        cursor: pointer
+        border-radius: 20px
+        border: 0 none
+        background-color: #eff2f6
+        font-weight: 400
+        margin-bottom: 11px
+        &.error
+            color: #fff
+            background-color: #f00
+    .radio-container
+        padding-bottom: 10px
+        label
+            float: left
+            font-size: 15px
+            font-weight: 400
+            line-height: 27px
+            padding-left: 17px
+            padding-top: 0
+            cursor: pointer
+        .iradio
+            float: left
+            margin-bottom: 11px
+            clear: both
+    .content-delegation
+        border-top: 1px solid #bebebe
+        margin-left: -46px
+        margin-right: -46px
+        padding-left: 46px
+        padding-right: 46px
+        padding-top: 22px
+        label
+            font-weight: 700
+        .delegations
+            li
+                width: 100%
+                padding-top: 20px
+                display: inline-block
+                border-bottom: 1px solid #bebebe
+                .icones
+                    float: left
+                    margin-right: 6px
+                    display: inline-block
+                    i.femme
+                        width: 16px
+                        height: 16px
+                .delegation-more
+                    float: left
+                    display: inline-block
+                    p, a
+                        color: #000
+                        font-size: 14px
+                        line-height: 17px
+                        margin-bottom: 0
+                        font-weight: 400
+                        padding-bottom: 12px
+                        b
+                            font-weight: 700
+                            span
+                                padding-left: 11px
+                .buttons
+                    float: right
+                    display: inline-block
+    .ui-dialog-titlebar-close
+        position: absolute
+        top: 20px
+        right: 20px
+        color: #000
+        font-size: 14px
+        font-weight: 700
+        line-height: 20px
+        text-transform: uppercase
+        border: 0 none
+        background: transparent
+        .ui-button-icon-space
+            float: right
+            display: inline-block
+            width: 12px
+            height: 12px
+        .ui-icon-closethick
+            float: right
+            display: inline-block
+            &:after
+                content: "\e908"
+                font-size: 12px
+                font-family: 'stanhome' !important
+                speak: none
+                font-style: normal
+                font-weight: normal
+                font-variant: normal
+                text-transform: none
+                line-height: 1
+                -webkit-font-smoothing: antialiased
+                -moz-osx-font-smoothing: grayscale
+    .ui-dialog-buttonpane
+        text-align: center
+        button
+            margin: 0 7px
+.lightbox-btn-vert
+    height: 61px
+    background-color: #1ba20a
+    line-height: 61px        
+    color: #fff
+    font-size: 23px
+    font-weight: 400
+    text-transform: uppercase
+    padding: 0 33px
+    border: 0 none
+.lightbox-btn-rouge
+    height: 61px
+    background-color: #f00  
+    color: #fff
+    font-size: 23px
+    font-weight: 400
+    line-height: 61px
+    text-transform: uppercase
+    padding: 0 33px
+    border: 0 none
+    
+.lightbox-container
+    display: none
+    
+#creation-contrat .content
+    padding-bottom: 0
+    
+.ui-datepicker
+    background: #fff
+    border-radius: 20px
+    border: 1px solid $gris_moyen
+    color: $noir
+    display: none
+    width: 232px
+    padding: 20px
+    table
+        width: 100%
+    a
+        color: $noir
+    td, th
+        line-height: 23px
+        width: 14,28%
+    th
+        color: $gris
+    .ui-datepicker-header
+        text-align: center
+        line-height: 25px
+        position: relative
+        text-transform: uppercase
+    .ui-datepicker-prev
+        position: absolute
+        left: 0
+        top: 50%
+        transform: translateY(-50%)
+        font-size: 12px
+        cursor: pointer
+        color: $gris
+        text-transform: none
+    .ui-datepicker-next
+        cursor: pointer
+        position: absolute
+        right: 0
+        top: 50%
+        color: $gris
+        transform: translateY(-50%)
+        font-size: 12px
+        text-transform: none
+
+.menu-mobile
+    display: none
+    left: 0
+    position: absolute
+    right: 0
+    top: 90px
+    z-index: 1
+    ul
+        display: inline-block
+        background: #e02a2c
+        padding-top: 26px
+        padding-bottom: 26px
+        width: 100%
+        li a
+            color: #fff
+            font-family: Lato
+            font-size: 27px
+            font-weight: 400
+            padding-left: 50px
+            line-height: 56px
+            display: inline-block
+            width: 100%
+            &.active, &:hover
+                background: #aa0002
+                text-decoration: none
+        
+    
+@import _fromTablet
+@import _fromPC
+@import _mobileOnly
+@import _tabletOnly
+@import _mobileAndTabletOnly

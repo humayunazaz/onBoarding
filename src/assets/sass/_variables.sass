@@ -1,0 +1,124 @@
+$breack-sm : 480px
+$breack-md : 768px
+$breack-lg : 1440px
+
+$rouge : #e02a2c
+$vert : #1ba20a
+$bleu : #343767
+$bleu_fonce : #16172e
+$gris : #707070
+$gris_clair : #eff2f6
+$gris_moyen : #dbdbdb
+$noir : #000
+$blanc: #fff
+$violet : #988dd5
+
+%resetmp
+    margin: 0
+    padding: 0
+    
+%max_w
+    max-width: 100%
+    height: auto
+    
+*, *:hover, *:focus, *:active
+    outline: 0 none
+    
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video
+	margin: 0
+	padding: 0
+	border: 0
+	font-size: 100%
+	font: inherit
+	vertical-align: baseline
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section
+	display: block
+
+body
+	line-height: 1
+
+ol, ul
+	list-style: none
+
+blockquote, q
+	quotes: none
+
+blockquote:before, blockquote:after,
+q:before, q:after
+	content: ''
+	content: none
+
+table
+	border-collapse: collapse
+	border-spacing: 0
+
+.femme
+    background: url('../img/femme.svg') no-repeat center center transparent
+    background-size: 100%
+    display: inline-block
+    
+.checkbox-degrade
+    background: url('../img/check-degrade.svg') no-repeat center center transparent
+    background-size: 100%
+    display: inline-block
+
+.iradio
+    width: 27px
+    height: 27px
+    background-color: #eff2f6
+    display: inline-block
+    position: relative
+    border-radius: 50%
+    cursor: pointer
+    &.checked:after
+        content: ""
+        background: $bleu
+        border-radius: 50%
+        display: inline-block
+        position: absolute
+        top: 7px
+        left: 7px
+        width: 13px
+        height: 13px
+.icheckbox
+    width: 24px
+    height: 24px
+    background-color: #eff2f6
+    border-radius: 5px
+    display: inline-block
+    position: relative
+    cursor: pointer
+    text-align: center
+    line-height: 24px
+    &.checked:after
+        content: "\e907"
+        color: $bleu
+        text-align: center
+        width: 100%
+        position: absolute
+        left: 1px
+        top: 5px
+        line-height: 24px
+        font-family: 'stanhome' !important
+        speak: none
+        font-style: normal
+        font-weight: normal
+        font-variant: normal
+        text-transform: none
+        line-height: 1
+        -webkit-font-smoothing: antialiased
+        -moz-osx-font-smoothing: grayscale

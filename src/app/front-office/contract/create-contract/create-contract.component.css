@@ -1,0 +1,182 @@
+
+.verification {
+    background-color: #eff2f6;
+    padding-right: 0px;
+    margin-right: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.last-tab-text {
+    margin-top: 45px;
+}
+
+.btn-bg {
+    background: #1ba20a;
+    color: #fff;
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 61px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-right: 0px;
+    height: 61px;
+    margin-bottom: 10px;
+}
+
+.verification-values {
+    padding-bottom: 10px;
+    margin-left: 5px;
+    padding-right: 15px;
+}
+
+.steps-container {
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 30px;
+}
+
+.steps-component .form-group {
+    margin: 0px;
+}
+
+.steps-component label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.steps-component input {
+    margin: 8px 0;
+    display: inline-block;
+    position: relative;
+    line-height: 40px;
+    height: 40px;
+    border: 0 none;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 22px;
+    border-radius: 20px;
+    background-color: #eff2f6;
+}
+
+.steps-component .error_input {
+    margin: 8px 0;
+    display: inline-block;
+    position: relative;
+    line-height: 40px;
+    height: 40px;
+    border: 0 none;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 22px;
+    border-radius: 20px;
+    background-color: red;
+}
+
+.steps-component input[type=checkbox]{
+    height: auto;
+
+}
+.lightbox-container input[type=email] {
+    width: 100%;
+    display: inline-block;
+    line-height: 40px;
+    height: 40px;
+    font-size: 14px;
+    padding: 0 18px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: 0 none;
+    background-color: #eff2f6;
+    font-weight: 400;
+    margin-bottom: 11px;
+}
+
+.steps-component select {
+    margin: 8px 0;
+    display: inline-block;
+    position: relative;
+    line-height: 40px;
+    height: 40px;
+    border: 0 none;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 0 22px;
+    border-radius: 20px;
+    background-color: #eff2f6;
+}
+
+.steps-component textarea {
+    height: 138px;
+    background-color: #eff2f6;
+    border-radius: 20px;
+    padding: 18px 28px;
+    font-size: 14px;
+    margin-bottom: 32px;
+    font-weight: 400;
+    line-height: 15px;
+    color: #000;
+    width: 100%;
+    border: 0 none;
+}
+
+.steps-component .text-area {
+    margin: 0px;
+    padding: 0px;
+    margin-top: 25px;
+}
+
+.top-margin {
+    margin-top: 50px;
+}
+
+.last-tab-responsive {
+    display: inline-block;
+    height: 100px;
+    background: #343767;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+.submit-button {
+    background: transparent;
+    border: none;
+}
+
+.steps-component .form-check-input {
+    display: table-cell;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.steps-component .form-check-label {
+    margin:0px;
+    font-weight: normal;
+}
+
+/*humayun styling*/
+.ui-dialog{
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
+.content .row{
+    padding: 10px 0;
+}
+.ui-dialog .content .row input{
+    margin-bottom: 0;
+}
+.ui-dialog .ui-dialog-buttonpane{
+    margin-top: 20px;
+}
+.erreur{
+    font-size: 14px;
+    color: red;
+    line-height: 24px;
+    padding-bottom: 0px;
+    text-align: justify;
+    font-style: italic;
+}
+.ui-dialog input[type=text].errors, .ui-dialog input[type=mail].errors {
+    background-color: red;
+}

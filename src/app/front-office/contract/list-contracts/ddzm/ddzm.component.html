@@ -1,0 +1,105 @@
+<section class="content mescontrats">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-lg-4">
+        <h1 class="titre-page">Mes contrats</h1>
+      </div>
+      <div class="col-xs-12 col-md-8">
+        <div class="recap-contrats">
+          <i class="icon-contrat"></i>
+          <p class="avalider"><span>35</span> Contrats à valider par vous</p>
+          <p class="asigner"><span>24</span> Contrats à signer par les recrues</p>
+        </div>
+        <!-- /.recap-contrats -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="contrat">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="filtre">
+                <label for="">Filtrer par statut :</label>
+                <div class="select-container">
+                  <select name="" id="" (change)="doFilter($event.target.value)">
+                    <option value="all">All</option>
+                    <option [value]="list" *ngFor="let list of filterList">{{list}}</option>
+                  </select>
+                  <i class="icon-angle"></i>
+                </div>
+              </div>
+              <!-- /.filtre -->
+            </div>
+            <div class="col-md-6">
+              <div class="recherche-container">
+                <input type="text" [ngModel]="search" placeholder="Rechercher un contrat (nom, prenom, email, telephone, ...)" class="hidden-xs hidden-sm hidden-md" (ngModelChange)="updateSearch($event)"/>
+                <input type="text" [ngModel]="search" placeholder="Rechercher un contrat" class="hidden-lg" (ngModelChange)="updateSearch($event)"/>
+                <button type="submit" (click)="doSearch()"><i class="icon-search"></i></button>
+              </div>
+            </div>
+          </div>
+          <table class="ddzm hidden-xs hidden-sm hidden-md">
+            <tr>
+              <th><span>Contact</span> <a title=""><i class="icon-tri"></i></a></th>
+              <th style="min-width: 180px" class="date"><span>Date<br/> de création</span> <a title=""><i class="icon-tri"></i></a></th>
+              <th class="signaleuse"><span>Signaleuse</span> <a title=""><i class="icon-tri"></i></a></th>
+              <th class="recruteuse"><span>Recruteuse</span> <a title=""><i class="icon-tri"></i></a></th>
+              <th class="statut"><span>Statut</span> <a title=""><i class="icon-tri"></i></a></th>
+              <th class="coordonnees"><span>Coordonnées</span> <a title=""><i class="icon-tri"></i></a></th>
+              <th>Actions</th>
+            </tr>
+            <tr *ngFor="let item of contracts">
+              <td>{{item.firstName}}<br />{{item.lastName}}</td>
+              <td>{{item.creationDate | date}}</td>
+              <td>{{item.nameCollaborateurSignaleuse}}</td>
+              <td>{{item.nameCollaborateurRecruteuse}}</td>
+              <td>{{item.statusContract?.stanhome}}<br /><span>13/05/2017 à 13h23</span></td>
+              <td>{{item.addrNumCellular}}<br /><span>{{item.addrEmail}}<br />{{item.addrCodePostal}} {{item.addrCity}}</span></td>
+              <td class="boutons">
+                <!--<a title="" class="lightbox btn-gris-border" lightbox="confirmation-suppression"><i class="icon-trash"></i></a>-->
+                <a [routerLink]="['/contract/step-one', item._id]" title="" class="btn-bleu-plein widthauto"><i class="icon-pencil"></i></a>
+                <!--<a title="" class="lightbox-blocage btn-rouge-plein widthauto"><i class="icon-hand"></i></a>-->
+                <!--<a title="" class="btn-vert-plein widthauto"><i class="icon-check-mark"></i></a>-->
+              </td>
+            </tr>
+          </table>
+        </div>
+        <!-- /.contrat -->
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+</section>
+
+<section class="content mescontrats hidden-lg">
+  <ul class="table-mobile" *ngFor="let item of contracts; let i = index;">
+    <li class="contrat"
+      [ngClass]="{
+        active: expandedItems[i]
+      }"
+    >
+      <div class="contrat-nom">
+        <p>{{item.firstName}}<br />{{item.lastName}}</p>
+      </div>
+      <div class="contrat-saisie">
+        <p>{{item.statusContract?.stanhome}}<br/><span>13/05/2017 à 13h23</span></p>
+      </div>
+      <div class="deroule">
+        <div class="contrat-nom">
+          <p class="infos-complementaires">{{item.addrNumCellular}}<br />{{item.addrCodePostal}} {{item.addrCity}}</p>
+        </div>
+        <div class="contrat-saisie">
+          <p class="infos-complementaires">S / {{item.nameCollaborateurSignaleuse}}<br />R / {{item.nameCollaborateurRecruteuse}}</p>
+        </div>
+        <div class="btns-actions">
+          <!--<a title="" class="btn-vert-plein"><i class="icon-check-mark"></i> Accepter</a>-->
+          <!--<a title="" class="btn-rouge-plein"><i class="icon-hand"></i> Refuser</a>-->
+          <a [routerLink]="['/contract/step-one', item._id]" title="" class="btn-bleu-plein widthauto"><i class="icon-pencil"></i> Editer</a>
+          <!--<a title="" class="lightbox btn-gris-border" lightbox="confirmation-suppression"><i class="icon-trash"></i> SUPPRIMER</a>-->
+        </div>
+      </div>
+      <i class="icon-triangle"></i>
+      <div class="openInfo" (click)="expanded(i)"></div>
+    </li>
+  </ul>
+</section>
